@@ -9,10 +9,10 @@ spring:
         - http://localhost:8000
     gateway:
       routes:
-        - id: student-service
-          uri: lb://student-service
+        - id: user-service
+          uri: lb://user-service
           predicates:
-            - Path=/api/v1/students/**
+            - Path=/api/v1/users/**
         - id: email-service
           uri: lb://email-service
           predicates:
