@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="eureka-server-one" />
         <module name="student-service" />
         <module name="email-service" />
       </profile>
@@ -14,6 +15,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="email-service" options="-parameters" />
+      <module name="eureka-server-one" options="-parameters" />
       <module name="student-service" options="-parameters" />
     </option>
   </component>

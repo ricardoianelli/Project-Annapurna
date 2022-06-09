@@ -13,6 +13,7 @@
         <module>student-service</module>
         <module>email-service</module>
         <module>eureka-server-one</module>
+        <module>api-gateway-one</module>
     </modules>
 
 </project>
