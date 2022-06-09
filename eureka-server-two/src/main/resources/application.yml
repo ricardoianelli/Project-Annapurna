@@ -1,8 +1,8 @@
 server:
-  port: 8082
+  port: 9092
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8081/eureka
+      defaultZone: http://localhost:9091/eureka
