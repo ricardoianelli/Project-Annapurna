@@ -1,10 +1,10 @@
-package edu.miu.eurekaserverone;
+package edu.miu.eurekaservertwo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EurekaServerOneApplicationTests {
+class EurekaServerTwoApplicationTests {
 
 	@Test
 	void contextLoads() {

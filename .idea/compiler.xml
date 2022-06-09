@@ -2,12 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="student-service" />
         <module name="config-server" />
+        <module name="eureka-server-two" />
         <module name="eureka-server-one" />
         <module name="api-gateway-one" />
         <module name="email-service" />
@@ -20,6 +22,7 @@
       <module name="config-server" options="-parameters" />
       <module name="email-service" options="-parameters" />
       <module name="eureka-server-one" options="-parameters" />
+      <module name="eureka-server-two" options="-parameters" />
       <module name="student-service" options="-parameters" />
     </option>
   </component>

@@ -1,4 +1,4 @@
-package edu.miu.eurekaserverone;
+package edu.miu.eurekaservertwo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

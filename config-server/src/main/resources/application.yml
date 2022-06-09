@@ -1,0 +1,21 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/bijayshr/cs544-spring-cloud-config.git
+          clone-on-start=true: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8081/eureka,http://localhost:8082/eureka
+  instance:
+    hostname: localhost
+

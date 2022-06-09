@@ -1,10 +1,10 @@
-//package edu.miu.studentservice;
+//package edu.miu.eurekaserverone;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //@SpringBootTest
-//class StudentServiceApplicationTests {
+//class EurekaServerOneApplicationTests {
 //
 //	@Test
 //	void contextLoads() {
