@@ -18,6 +18,7 @@
         <module>user-service</module>
         <module>email-service</module>
         <module>rating-service</module>
+        <module>auth-server</module>
     </modules>
 
 </project>
