@@ -17,3 +17,11 @@ spring:
           uri: lb://email-service
           predicates:
             - Path=/api/v1/email/**
+        - id: etl-service
+          uri: lb://etl-service
+          predicates:
+            - Path=/api/v1/etl/**
+        - id: rating-service
+          uri: lb://rating-service
+          predicates:
+            - Path=/api/v1/ratings/**

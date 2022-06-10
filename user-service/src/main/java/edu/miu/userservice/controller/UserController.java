@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
+
 import static edu.miu.userservice.constant.WebResourceKeyConstant.ALL;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.USER_BASE;
@@ -26,9 +28,25 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getUserById(id),
+                HttpStatus.OK);
+    }
+
     @PostMapping
-    public ResponseEntity<?> addStudents(@RequestBody UserRequestDTO userRequestDTO){
+    public ResponseEntity<?> addUser(@RequestBody UserRequestDTO userRequestDTO){
         return new ResponseEntity<>(userService.addUser(userRequestDTO),
                 HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO){
+        return new ResponseEntity<>(userService.updateUser(userRequestDTO, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
     }
 }

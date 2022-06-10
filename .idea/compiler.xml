@@ -7,22 +7,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="rating-service" />
         <module name="config-server" />
         <module name="eureka-server-two" />
-        <module name="user-service" />
         <module name="eureka-server-one" />
         <module name="api-gateway-one" />
         <module name="email-service" />
+        <module name="auth-server" />
+        <module name="user-service" />
+        <module name="etl-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway-one" options="-parameters" />
+      <module name="auth-server" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="email-service" options="-parameters" />
+      <module name="etl-service" options="-parameters" />
       <module name="eureka-server-one" options="-parameters" />
       <module name="eureka-server-two" options="-parameters" />
+      <module name="rating-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

@@ -10,5 +10,11 @@ public interface UserService {
 
     List<UserResponseDTO> getAllUsers();
 
+    UserResponseDTO getUserById(Long id);
+
     String addUser(UserRequestDTO userRequestDTO);
+
+    UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id);
+
+    String deleteUser(Long id);
 }
