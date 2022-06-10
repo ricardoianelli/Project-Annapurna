@@ -1,18 +1,29 @@
 package edu.miu.userservice.model;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
-public class User {
+@Table(name = "user")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(name = "username", length = 20, nullable = false)
+    private String username;
+
+    @Column(name = "password", length = 50, nullable = false)
+    private String password;
 
     @Column(name = "name", nullable = false, length = 30)
     private String name;
@@ -22,5 +33,8 @@ public class User {
 
     @Column(name = "subscribed")
     public Boolean subscribed;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
 }

@@ -5,12 +5,10 @@ import edu.miu.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.ws.rs.Path;
-
-import static edu.miu.userservice.constant.WebResourceKeyConstant.ALL;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
+import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.FETCH_USER_BY_USERNAME;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.USER_BASE;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping(value = API_V1 + USER_BASE)
@@ -32,6 +30,11 @@ public class UserController {
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         return new ResponseEntity<>(userService.getUserById(id),
                 HttpStatus.OK);
+    }
+
+    @GetMapping(value = FETCH_USER_BY_USERNAME)
+    public ResponseEntity<?> fetchAdminByUsername(@PathVariable("username") String username) {
+        return ok(userService.getUserByUsername(username));
     }
 
     @PostMapping

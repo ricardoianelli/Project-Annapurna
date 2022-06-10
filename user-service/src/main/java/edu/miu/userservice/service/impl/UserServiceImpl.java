@@ -2,6 +2,7 @@ package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
+import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
@@ -33,10 +34,21 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id).get();
         if(user != null){
-            return UserUtils.parseUserToUserResponseDTOObject(user);
+            return UserUtils.parseUserToUserResponseDTO(user);
         }else{
             //TODO: IMPLEMENT EXCEPTION HANDLING HERE
             return new UserResponseDTO();
+        }
+    }
+
+    @Override
+    public UserResponseFeignDTO getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).get();
+        if(user != null){
+            return UserUtils.parseUserToUserResponseFeignDTO(user);
+        }else{
+            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
+            return new UserResponseFeignDTO();
         }
     }
 

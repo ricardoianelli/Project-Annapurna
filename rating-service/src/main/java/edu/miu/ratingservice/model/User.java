@@ -14,6 +14,12 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "username", length = 20, nullable = false)
+    private String username;
+
+    @Column(name = "password", length = 50, nullable = false)
+    private String password;
+
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 

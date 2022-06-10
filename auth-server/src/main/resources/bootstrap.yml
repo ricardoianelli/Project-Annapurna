@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: api-gateway-one
+  cloud:
+    config:
+      uri:
+        - http://localhost:8000
