@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class DineType implements Serializable {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Short id;
 
     private String name;
 }

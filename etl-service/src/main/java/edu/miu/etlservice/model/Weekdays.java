@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class Weekdays implements Serializable {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Short id;
     private String weekday;
 }

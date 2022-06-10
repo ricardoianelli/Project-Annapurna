@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Meal implements Serializable {
     @Id
     @GeneratedValue
-    private Long id;
+    private Short id;
     private String name;
     private String description;
 
