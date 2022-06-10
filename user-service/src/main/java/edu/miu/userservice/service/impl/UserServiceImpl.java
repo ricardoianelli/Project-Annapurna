@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -33,12 +34,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO getUserById(Long id) throws UserNotFoundException {
-        User user = userRepository.findById(id).get();
-        if (user != null) {
+        try {
+            User user = userRepository.findById(id).get();
             return UserUtils.parseUserToUserResponseDTOObject(user);
-        } else {
+        }
+        catch (NoSuchElementException ex) {
             throw new UserNotFoundException();
-            // return new UserResponseDTO();
         }
     }
 
