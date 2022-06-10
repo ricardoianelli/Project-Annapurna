@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DineTypeRepository extends JpaRepository<DineType, Short> {
+    DineType getDineTypeByName(String name);
 }
