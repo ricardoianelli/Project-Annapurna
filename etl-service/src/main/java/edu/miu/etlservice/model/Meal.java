@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -11,9 +12,14 @@ import java.io.Serializable;
 @Data
 public class Meal implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
     private String name;
-    private String description;
 
+    public Meal() {
+    }
+
+    public Meal(String name) {
+        this.name = name;
+    }
 }
