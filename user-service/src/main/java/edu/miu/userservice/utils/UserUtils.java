@@ -22,6 +22,8 @@ public class UserUtils {
         return userResponseDTOList;
     }
 
+
+
     public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
         User user = new User();
         user.setName(userRequestDTO.getName());
@@ -35,6 +37,15 @@ public class UserUtils {
         userResponseDTO.setName(userRequestDTO.getName());
         userResponseDTO.setEmail(userRequestDTO.getEmail());
         userResponseDTO.setSubscribed(userRequestDTO.getSubscribed());
+        return userResponseDTO;
+    }
+
+    public static UserResponseDTO parseUserToUserResponseDTOObject(User user){
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setName(user.getName());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setSubscribed(user.getSubscribed());
+
         return userResponseDTO;
     }
 

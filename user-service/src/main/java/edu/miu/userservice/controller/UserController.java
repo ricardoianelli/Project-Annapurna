@@ -28,6 +28,12 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getUserById(id),
+                HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody UserRequestDTO userRequestDTO){
         return new ResponseEntity<>(userService.addUser(userRequestDTO),
@@ -39,7 +45,7 @@ public class UserController {
         return new ResponseEntity<>(userService.updateUser(userRequestDTO, id), HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
     }

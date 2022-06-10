@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
+//TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE TESTING
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -29,10 +30,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id).get();
+        if(user != null){
+            return UserUtils.parseUserToUserResponseDTOObject(user);
+        }else{
+            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
+            return new UserResponseDTO();
+        }
+    }
+
+    @Override
     public String addUser(UserRequestDTO userRequestDTO) {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         user = userRepository.save(user);
         if(user!= null){
+            //TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
         } else{
             return "Sorry, something went wrong";
@@ -44,6 +57,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         if(user != null){
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+            user.setId(id);
             userRepository.save(user);
         }else{
             //TODO: NEED TO DO EXCEPTION HANDLING
@@ -57,6 +71,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         if(user != null){
             userRepository.delete(user);
+            //CHANGE RETURN TYPE TO VOID LATER
             return "User Deleted Successfully!";
         }else{
             return "User Not Found. ";
