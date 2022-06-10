@@ -1,14 +1,14 @@
 package edu.miu.userservice.exception;
 
-public class InputFieldEmpty extends RuntimeException {
+public class InputFieldEmptyException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private String errorCode;
     private String errorMessage;
 
-    public InputFieldEmpty() {
+    public InputFieldEmptyException() {
     }
 
-    public InputFieldEmpty(String errorCode, String errorMessage) {
+    public InputFieldEmptyException(String errorCode, String errorMessage) {
         super();
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;

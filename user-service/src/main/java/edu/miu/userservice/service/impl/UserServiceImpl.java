@@ -2,6 +2,7 @@ package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
+import edu.miu.userservice.exception.UserNotFoundException;
 import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
@@ -13,7 +14,8 @@ import java.util.List;
 
 @Service
 @Transactional
-//TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE TESTING
+// TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE
+// TESTING
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -30,13 +32,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) {
+    public UserResponseDTO getUserById(Long id) throws UserNotFoundException {
         User user = userRepository.findById(id).get();
-        if(user != null){
+        if (user != null) {
             return UserUtils.parseUserToUserResponseDTOObject(user);
-        }else{
-            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
-            return new UserResponseDTO();
+        } else {
+            throw new UserNotFoundException();
+            // return new UserResponseDTO();
         }
     }
 
@@ -44,10 +46,10 @@ public class UserServiceImpl implements UserService {
     public String addUser(UserRequestDTO userRequestDTO) {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         user = userRepository.save(user);
-        if(user!= null){
-            //TODO: CHANGE RETURN TYPE TO VOID
+        if (user != null) {
+            // TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
-        } else{
+        } else {
             return "Sorry, something went wrong";
         }
     }
@@ -55,12 +57,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
         User user = userRepository.findById(id).get();
-        if(user != null){
+        if (user != null) {
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
             user.setId(id);
             userRepository.save(user);
-        }else{
-            //TODO: NEED TO DO EXCEPTION HANDLING
+        } else {
+            // TODO: NEED TO DO EXCEPTION HANDLING
             return new UserResponseDTO();
         }
         return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO);
@@ -69,14 +71,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteUser(Long id) {
         User user = userRepository.findById(id).get();
-        if(user != null){
+        if (user != null) {
             userRepository.delete(user);
-            //CHANGE RETURN TYPE TO VOID LATER
+            // CHANGE RETURN TYPE TO VOID LATER
             return "User Deleted Successfully!";
-        }else{
+        } else {
             return "User Not Found. ";
         }
     }
-
 
 }

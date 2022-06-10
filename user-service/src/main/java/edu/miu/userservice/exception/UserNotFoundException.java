@@ -1,15 +1,15 @@
 package edu.miu.userservice.exception;
 
-public class UsersNotFound extends RuntimeException {
+public class UserNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private String errorCode;
     private String errorMessage;
 
-    public UsersNotFound() {
+    public UserNotFoundException() {
 
     }
 
-    public UsersNotFound(String errorCode, String errorMessage) {
+    public UserNotFoundException(String errorCode, String errorMessage) {
         super();
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
