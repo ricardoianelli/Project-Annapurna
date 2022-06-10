@@ -10,12 +10,14 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>etl-service</module>
         <module>eureka-server-one</module>
         <module>eureka-server-two</module>
         <module>config-server</module>
         <module>api-gateway-one</module>
         <module>user-service</module>
         <module>email-service</module>
+        <module>rating-service</module>
     </modules>
 
 </project>
