@@ -1,10 +1,10 @@
-//package edu.miu.studentservice;
+//package edu.miu.userservice;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //@SpringBootTest
-//class StudentServiceApplicationTests {
+//class UserServiceApplicationTests {
 //
 //	@Test
 //	void contextLoads() {
