@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>edu.miu</groupId>
-	<artifactId>student-service</artifactId>
+	<artifactId>user-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>student-service</name>
+	<name>user-service</name>
 	<description>This is a Student Microservice</description>
 	<properties>
 		<java.version>11</java.version>
