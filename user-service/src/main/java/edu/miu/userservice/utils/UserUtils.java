@@ -19,15 +19,23 @@ public class UserUtils {
             userResponseDTO.setSubscribed(user.getSubscribed());
             userResponseDTOList.add(userResponseDTO);
         }
-       return userResponseDTOList;
+        return userResponseDTOList;
     }
 
     public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
-            User user = new User();
-            user.setName(userRequestDTO.getName());
-            user.setEmail(userRequestDTO.getEmail());
-            user.setSubscribed(userRequestDTO.getSubscribed());
-            return user;
+        User user = new User();
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setSubscribed(userRequestDTO.getSubscribed());
+        return user;
+    }
+
+    public static UserResponseDTO parseUserRequestDTOToUserResponseDTO(UserRequestDTO userRequestDTO){
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setName(userRequestDTO.getName());
+        userResponseDTO.setEmail(userRequestDTO.getEmail());
+        userResponseDTO.setSubscribed(userRequestDTO.getSubscribed());
+        return userResponseDTO;
     }
 
 }

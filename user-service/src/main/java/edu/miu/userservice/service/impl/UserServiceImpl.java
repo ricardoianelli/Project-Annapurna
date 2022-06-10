@@ -31,11 +31,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public String addUser(UserRequestDTO userRequestDTO) {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-         user = userRepository.save(user);
+        user = userRepository.save(user);
         if(user!= null){
             return "User Created Successfully!";
         } else{
             return "Sorry, something went wrong";
         }
     }
+
+    @Override
+    public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
+        User user = userRepository.findById(id).get();
+        if(user != null){
+            user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+            userRepository.save(user);
+        }else{
+            //TODO: NEED TO DO EXCEPTION HANDLING
+            return new UserResponseDTO();
+        }
+        return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO);
+    }
+
+    @Override
+    public String deleteUser(Long id) {
+        User user = userRepository.findById(id).get();
+        if(user != null){
+            userRepository.delete(user);
+            return "User Deleted Successfully!";
+        }else{
+            return "User Not Found. ";
+        }
+    }
+
+
 }
