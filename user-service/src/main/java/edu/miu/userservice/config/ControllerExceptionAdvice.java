@@ -23,19 +23,23 @@ public class ControllerExceptionAdvice {
     }
 
     @ExceptionHandler(InputFieldEmptyException.class)
-    public ResponseEntity<StandardError> handleInputFieldEntity(InputFieldEmptyException ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> handleInputFieldEntity(InputFieldEmptyException ex,
+            HttpServletRequest request) {
         String errorMsg = "Input Field is Empty";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         return getResponseError(errorMsg, status, request);
     }
 
-    private ResponseEntity<StandardError> getResponseError(String message, HttpStatus status, HttpServletRequest request)  {
+    private ResponseEntity<StandardError> getResponseError(String message, HttpStatus status,
+            HttpServletRequest request) {
         StandardError error = new StandardError(Instant.now(), status.value(), message, null, request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
 
-    private ResponseEntity<StandardError> getResponseError(String message, HttpStatus status, HttpServletRequest request, Exception ex)  {
-        StandardError error = new StandardError(Instant.now(), status.value(), message, ex.getMessage(), request.getRequestURI());
+    private ResponseEntity<StandardError> getResponseError(String message, HttpStatus status,
+            HttpServletRequest request, Exception ex) {
+        StandardError error = new StandardError(Instant.now(), status.value(), message, ex.getMessage(),
+                request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
 
