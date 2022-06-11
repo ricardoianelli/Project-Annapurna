@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: auth-server
+  cloud:
+    config:
+      uri:
+        - http://localhost:8000
+#eureka:
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false
+#    service-url:
+#      defaultZone: http://localhost:8080/eureka
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+#zuul:
+#  prefix: /api/v1

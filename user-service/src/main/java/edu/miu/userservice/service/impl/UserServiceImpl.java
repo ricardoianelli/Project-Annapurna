@@ -1,23 +1,25 @@
 package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
+import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
-import edu.miu.userservice.exception.InputFieldEmptyException;
-import edu.miu.userservice.exception.UserNotFoundException;
+import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
 import edu.miu.userservice.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Objects;
+
+import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
 @Service
 @Transactional
-// TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE
+//TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE TESTING
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -29,73 +31,81 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        if (users.size() != 0) {
-            List<UserResponseDTO> userResponseDTOS = UserUtils.parseUserToUserResponseDTO(users);
-            return userResponseDTOS;
-        }
-
-        return new ArrayList<>();
+        List<UserResponseDTO> userResponseDTOS = UserUtils.parseUserToUserResponseDTO(users);
+        return userResponseDTOS;
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) throws UserNotFoundException {
-        try {
-            User user = userRepository.findById(id).get();
-            return UserUtils.parseUserToUserResponseDTOObject(user);
-        } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException();
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id).get();
+        if(user != null){
+            return UserUtils.parseUserToUserResponseDTO(user);
+        }else{
+            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
+            return new UserResponseDTO();
+        }
+    }
+
+    @Override
+    public UserResponseFeignDTO getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).get();
+        if(user != null){
+            return UserUtils.parseUserToUserResponseFeignDTO(user);
+        }else{
+            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
+            return new UserResponseFeignDTO();
         }
     }
 
     @Override
     public String addUser(UserRequestDTO userRequestDTO) {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-        if (user.getName().isEmpty() || user.getEmail().isEmpty() || user.getSubscribed() == null) {
-            throw new InputFieldEmptyException();
-        } else {
-            user = userRepository.save(user);
+        user = userRepository.save(user);
+        if(user!= null){
+            //TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
+        } else{
+            return "Sorry, something went wrong";
         }
-        // user = userRepository.save(user);
-        // if (user != null) {
-        // // TODO: CHANGE RETURN TYPE TO VOID
-        // return "User Created Successfully!";
-        // } else {
-        // return "Sorry, something went wrong";
-        // }
     }
 
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
-        try {
-            User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).get();
+        if(user != null){
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
             user.setId(id);
             userRepository.save(user);
-            return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO);
-        } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException();
+        }else{
+            //TODO: NEED TO DO EXCEPTION HANDLING
+            return new UserResponseDTO();
         }
-        // User user = userRepository.findById(id).get();
-        // if (user != null) {
-        // user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-        // user.setId(id);
-        // userRepository.save(user);
-        // } else {
-        // // TODO: NEED TO DO EXCEPTION HANDLING
-        // return new UserResponseDTO();
-        // }
-        // return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO);
+        return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO, id);
     }
 
     @Override
     public String deleteUser(Long id) {
-        try {
-            User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).get();
+        if(user != null){
             userRepository.delete(user);
+            //CHANGE RETURN TYPE TO VOID LATER
             return "User Deleted Successfully!";
-        } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException();
+        }else{
+            return "User Not Found. ";
         }
     }
+
+    @Override
+    public UserResponseFeignDTO searchUser(UserRequestFeignDTO userRequestFeignDTO) {
+        User user = null;
+        if(userRequestFeignDTO.getEmailAddress()!= null){
+            user = userRepository.findByEmail(userRequestFeignDTO.getEmailAddress()).get();
+        }else {
+            user = userRepository.findByUsername(userRequestFeignDTO.getUsername()).get();
+        }
+        //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
+        return convertToUserResponseFeignDTO.apply(user);
+    }
+
+
 }
