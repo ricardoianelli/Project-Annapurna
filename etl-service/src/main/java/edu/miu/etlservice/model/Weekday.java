@@ -10,16 +10,17 @@ import java.io.Serializable;
 
 @Entity
 @Data
-public class Meal implements Serializable {
+public class Weekday implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
-    private String name;
+    private String weekday;
 
-    public Meal() {
+    public Weekday(String weekday) {
+        this.weekday = weekday;
     }
 
-    public Meal(String name) {
-        this.name = name;
+    public Weekday() {
+
     }
 }
