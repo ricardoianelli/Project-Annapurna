@@ -1,4 +1,4 @@
-package edu.miu.etlservice.service;
+package edu.miu.etlservice.service.impl;
 
 import edu.miu.etlservice.model.DailyMeal;
 import edu.miu.etlservice.model.DineType;
@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class EtlService {
-    DailyMealRepository dailyMealRepository;
-    DineTypeRepository dineTypeRepository;
-    MealRepository mealRepository;
-    WeekdayRepository weekdayRepository;
+public class EtlServiceImpl implements EtlService {
+    private final DailyMealRepository dailyMealRepository;
+    private final DineTypeRepository dineTypeRepository;
+    private final MealRepository mealRepository;
+    private final WeekdayRepository weekdayRepository;
 
-    public EtlService(DailyMealRepository dailyMealRepository, DineTypeRepository dineTypeRepository, MealRepository mealRepository, WeekdayRepository weekdayRepository) {
+    public EtlServiceImpl(DailyMealRepository dailyMealRepository, DineTypeRepository dineTypeRepository, MealRepository mealRepository, WeekdayRepository weekdayRepository) {
         this.dailyMealRepository = dailyMealRepository;
         this.dineTypeRepository = dineTypeRepository;
         this.mealRepository = mealRepository;
