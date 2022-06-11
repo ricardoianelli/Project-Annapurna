@@ -6,6 +6,6 @@ public class WebResourceKeyConstant {
     public static final String ALL = "/all";
 
     public interface UserConstants {
-        String USER_BASE = "/etl";
+        String ETL_BASE = "/etl";
     }
 }
