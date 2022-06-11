@@ -5,11 +5,11 @@ spring:
     config:
       uri:
         - http://localhost:8000
-#  datasource:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    username: root
-#    url: jdbc:mysql://localhost:3306/argiro
-#    password: root
-#  jpa:
-#    hibernate:
-#      ddl-auto: create-drop
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/argiro
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

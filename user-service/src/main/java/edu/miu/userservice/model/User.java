@@ -11,9 +11,6 @@ import java.util.List;
 @Table(name = "user")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class User implements Serializable {
     @Id
     @GeneratedValue
@@ -22,7 +19,7 @@ public class User implements Serializable {
     @Column(name = "username", length = 20, nullable = false)
     private String username;
 
-    @Column(name = "password", length = 50, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "name", nullable = false, length = 30)
@@ -35,6 +32,18 @@ public class User implements Serializable {
     public Boolean subscribed;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    public User() {
+    }
+
+    public User(String username, String password, String email, Boolean subscribed, String name, List<String> roles) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.subscribed = subscribed;
+        this.roles = roles;
+    }
 }

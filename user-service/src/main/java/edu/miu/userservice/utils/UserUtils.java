@@ -4,6 +4,7 @@ import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,18 +30,11 @@ public class UserUtils {
     public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
         User user = new User();
         user.setName(userRequestDTO.getName());
+        user.setUsername(userRequestDTO.getUsername());
         user.setEmail(userRequestDTO.getEmail());
         user.setSubscribed(userRequestDTO.getSubscribed());
-        switch(userRequestDTO.getRoleType()) {
-            case 'B':
-                user.setRoles(Arrays.asList("FACULTY", "STUDENT"));
-                break;
-            case 'F':
-                user.setRoles(Arrays.asList("FACULTY"));
-                break;
-            default:
-                user.setRoles(Arrays.asList("STUDENT"));
-        }
+        user.setPassword(BCrypt.hashpw(userRequestDTO.getPassword(), BCrypt.gensalt()));
+        user.setRoles(userRequestDTO.getRoles());
 
         return user;
     }

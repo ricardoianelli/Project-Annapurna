@@ -12,6 +12,7 @@ import edu.miu.loginservice.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,7 +80,8 @@ public class LoginServiceImpl implements LoginService {
 
         LOGGER.info(":::: ADMIN PASSWORD VALIDATION ::::");
 
-        if (!Objects.equals(loginRequestDTO.getPassword(), user.getPassword())) {
+
+        if (!BCrypt.checkpw(loginRequestDTO.getPassword(), user.getPassword())) {
             LOGGER.debug("INCORRECT PASSWORD...");
             throw new UnauthorisedException(
                     ErrorMessageConstant.ForgetPassword.MESSAGE,
