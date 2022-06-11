@@ -8,6 +8,7 @@ import edu.miu.userservice.model.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class UserUtils {
@@ -75,4 +76,16 @@ public class UserUtils {
         return userResponseDTO;
     }
 
+    public static Function<User, UserResponseFeignDTO> convertToUserResponseFeignDTO = user -> {
+        UserResponseFeignDTO responseDTO = new UserResponseFeignDTO();
+
+        responseDTO.setId(user.getId());
+        responseDTO.setPassword(user.getPassword());
+        responseDTO.setUsername(user.getUsername());
+        responseDTO.setEmail(user.getEmail());
+        responseDTO.setName(user.getName());
+        responseDTO.setSubscribed(user.getSubscribed());
+
+        return responseDTO;
+    };
 }

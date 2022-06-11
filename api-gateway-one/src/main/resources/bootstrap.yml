@@ -25,3 +25,7 @@ spring:
           uri: lb://rating-service
           predicates:
             - Path=/api/v1/ratings/**
+        - id: login-service
+          uri: lb://login-service
+          predicates:
+            - Path=/api/v1/login/**

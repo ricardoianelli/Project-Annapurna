@@ -28,7 +28,7 @@ public class LoginController {
                                             HttpServletRequest request) {
 
         String token = loginService.login(requestDTO, request);
-        return ok().body(loginService.login(requestDTO, request));
+        return ok().body(token);
     }
 
     @GetMapping("/test")

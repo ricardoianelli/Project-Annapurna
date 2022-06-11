@@ -1,6 +1,7 @@
 package edu.miu.userservice.service;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
+import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
@@ -20,4 +21,6 @@ public interface UserService {
     UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id);
 
     String deleteUser(Long id);
+
+    UserResponseFeignDTO searchUser(UserRequestFeignDTO requestDTO);
 }

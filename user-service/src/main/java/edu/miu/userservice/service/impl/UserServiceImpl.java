@@ -1,6 +1,7 @@
 package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
+import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
@@ -9,8 +10,12 @@ import edu.miu.userservice.service.UserService;
 import edu.miu.userservice.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.Objects;
+
+import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
 @Service
 @Transactional
@@ -88,6 +93,18 @@ public class UserServiceImpl implements UserService {
         }else{
             return "User Not Found. ";
         }
+    }
+
+    @Override
+    public UserResponseFeignDTO searchUser(UserRequestFeignDTO userRequestFeignDTO) {
+        User user = null;
+        if(userRequestFeignDTO.getEmailAddress()!= null){
+            user = userRepository.findByEmail(userRequestFeignDTO.getEmailAddress()).get();
+        }else {
+            user = userRepository.findByUsername(userRequestFeignDTO.getUsername()).get();
+        }
+        //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
+        return convertToUserResponseFeignDTO.apply(user);
     }
 
 

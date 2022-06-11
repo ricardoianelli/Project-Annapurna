@@ -12,7 +12,6 @@ import edu.miu.loginservice.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +56,16 @@ public class LoginServiceImpl implements LoginService {
 
         Pattern pattern = Pattern.compile(PatternConstant.EmailConstant.EMAIL_PATTERN);
         Matcher m = pattern.matcher(loginRequestDTO.getUserCredential());
+        boolean match = m.matches();
+        if(!match){
+            return userFeignInterface.searchUser
+                    (UserRequestFeignDTO.builder().username(loginRequestDTO.getUserCredential()).emailAddress(null).build());
+        }else{
+            return userFeignInterface.searchUser
+                    (UserRequestFeignDTO.builder().username(null).emailAddress(loginRequestDTO.getUserCredential()).build());
+        }
 
-        return m.find() ? userFeignInterface.searchUser
-                (UserRequestFeignDTO.builder().username(null).emailAddress(loginRequestDTO.getUserCredential()).build())
-                : userFeignInterface.searchUser
-                (UserRequestFeignDTO.builder().username(loginRequestDTO.getUserCredential()).emailAddress(null).build());
+
     };
 
     private final Consumer<UserResponseFeignDTO> validateUsername = (user) -> {

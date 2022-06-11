@@ -13,6 +13,5 @@ import java.io.Serializable;
 @Setter
 public class LoginRequestDTO implements Serializable {
     private String userCredential;
-
     private String password;
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-gateway-one
+    name: auth-server
   cloud:
     config:
       uri:
