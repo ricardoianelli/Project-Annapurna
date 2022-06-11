@@ -7,5 +7,5 @@ import edu.miu.emailservice.domain.User;
 import java.util.List;
 
 public interface EmailCreatorService {
-    Email create(User user, List<DailyMeal> dailyMealList);
+    Email create(User user, DailyMeal dailyMeal);
 }
