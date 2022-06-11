@@ -27,14 +27,15 @@ public class ApplicationStartup {
     public CommandLineRunner loadData(UserRepository userRepository) {
         return (args) -> {
             List<User> users = userRepository.findAll();
-
+            //TODO: This is weird here!
+            System.out.println("Name : " + startupProperties.getName());
             if (ObjectUtils.isEmpty(users)) {
                 userRepository.save(new User(
                         startupProperties.getUsername(),
                         BCrypt.hashpw(startupProperties.getPassword(), BCrypt.gensalt()),
                         startupProperties.getEmail(),
                         startupProperties.getSubscribed(),
-                        startupProperties.getName(),
+                        "Benedict Cumberbatch",
                         Arrays.asList("FACULTY", "STUDENT")));
             }
         };

@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
             //TODO: NEED TO DO EXCEPTION HANDLING
             return new UserResponseDTO();
         }
-        return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO);
+        return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO, id);
     }
 
     @Override

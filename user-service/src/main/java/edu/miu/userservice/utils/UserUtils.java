@@ -27,6 +27,7 @@ public class UserUtils {
         return userResponseDTOList;
     }
 
+    //TODO: THIS NEEDS TO BE REFACTORED
     public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
         User user = new User();
         user.setName(userRequestDTO.getName());
@@ -34,13 +35,15 @@ public class UserUtils {
         user.setEmail(userRequestDTO.getEmail());
         user.setSubscribed(userRequestDTO.getSubscribed());
         user.setPassword(BCrypt.hashpw(userRequestDTO.getPassword(), BCrypt.gensalt()));
-        user.setRoles(userRequestDTO.getRoles());
+        if(userRequestDTO.getRoles()!=null || !userRequestDTO.getRoles().isEmpty())
+            user.setRoles(userRequestDTO.getRoles());
 
         return user;
     }
 
-    public static UserResponseDTO parseUserRequestDTOToUserResponseDTO(UserRequestDTO userRequestDTO){
+    public static UserResponseDTO parseUserRequestDTOToUserResponseDTO(UserRequestDTO userRequestDTO, Long id){
         UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(id);
         userResponseDTO.setName(userRequestDTO.getName());
         userResponseDTO.setEmail(userRequestDTO.getEmail());
         userResponseDTO.setSubscribed(userRequestDTO.getSubscribed());
