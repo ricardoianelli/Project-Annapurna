@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import java.io.Serializable;
 
 @Entity
@@ -15,4 +16,9 @@ public class DineType implements Serializable {
     private Integer id;
 
     private String name;
+
+    public DineType(String name) {
+        this.name = name;
+    }
+
 }

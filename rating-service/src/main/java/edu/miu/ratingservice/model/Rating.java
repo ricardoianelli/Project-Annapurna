@@ -18,4 +18,16 @@ public class Rating implements Serializable {
     @ManyToOne
     private User user;
 
+    private Double rating;
+
+    public Rating() {
+
+    }
+
+    public Rating(DailyMeal dailyMeal, User user, Double rating) {
+        this.dailyMeal = dailyMeal;
+        this.user = user;
+        this.rating = rating;
+    }
+
 }

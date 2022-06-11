@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -17,11 +17,18 @@ public class DailyMeal implements Serializable {
     private Meal meal;
 
     @ManyToOne
-    private Weekdays weekdays;
+    private Weekday weekday;
 
     @ManyToOne
     private DineType dineType;
 
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
+
+    public DailyMeal(Meal meal, Weekday weekday, DineType dineType, LocalDate date) {
+        this.meal = meal;
+        this.weekday = weekday;
+        this.dineType = dineType;
+        this.date = date;
+    }
 }

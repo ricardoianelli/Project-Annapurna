@@ -23,4 +23,13 @@ public class User {
     @Column(name = "subscribed")
     public Boolean subscribed;
 
+    public User() {
+    }
+
+    public User(String name, String email, Boolean subscribed) {
+        this.name = name;
+        this.email = email;
+        this.subscribed = subscribed;
+    }
+
 }
