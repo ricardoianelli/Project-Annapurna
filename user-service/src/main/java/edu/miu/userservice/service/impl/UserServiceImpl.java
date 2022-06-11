@@ -11,13 +11,13 @@ import edu.miu.userservice.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 @Transactional
 // TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE
-// TESTING
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
         if (users.size() != 0) {
             List<UserResponseDTO> userResponseDTOS = UserUtils.parseUserToUserResponseDTO(users);
             return userResponseDTOS;
-        } else {
-            throw new UserNotFoundException();
         }
+
+        return new ArrayList<>();
     }
 
     @Override

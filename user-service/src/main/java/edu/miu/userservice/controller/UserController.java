@@ -1,14 +1,14 @@
 package edu.miu.userservice.controller;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
+import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
+import java.util.List;
 
-import static edu.miu.userservice.constant.WebResourceKeyConstant.ALL;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.USER_BASE;
 
@@ -24,8 +24,14 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> getUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(),
-                HttpStatus.OK);
+        List<UserResponseDTO> users = userService.getAllUsers();
+
+        if (users.size() > 0) {
+           return new ResponseEntity<>(users,
+                     HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
@@ -36,7 +42,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody UserRequestDTO userRequestDTO) {
-        return new ResponseEntity<String>(userService.addUser(userRequestDTO),
+        return new ResponseEntity<>(userService.addUser(userRequestDTO),
                 HttpStatus.CREATED);
     }
 
