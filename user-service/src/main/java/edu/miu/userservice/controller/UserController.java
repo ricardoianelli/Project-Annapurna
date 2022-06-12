@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.USER_BASE;
@@ -24,19 +24,20 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsers(@RequestParam("subscribed") Optional<Boolean> subscribedFilter) {
+    public ResponseEntity<?> getUsers(@RequestParam Map<String,String> requestParams) {
 
         List<UserResponseDTO> users;
 
-        if (subscribedFilter.isPresent()) {
-            users = userService.getUsersBySubscription(subscribedFilter.get());
-        } else {
-            users =userService.getAllUsers();
+        if (requestParams.containsKey("subscribed")) {
+            Boolean subscribed = Boolean.valueOf(requestParams.get("subscribed"));
+            users = userService.getUsersBySubscription(subscribed);
+        }
+        else {
+            users = userService.getAllUsers();
         }
 
         if (users.size() > 0) {
-           return new ResponseEntity<>(users,
-                     HttpStatus.OK);
+            return new ResponseEntity<>(users, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
