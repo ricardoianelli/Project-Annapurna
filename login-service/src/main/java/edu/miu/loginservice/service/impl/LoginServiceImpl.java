@@ -1,13 +1,15 @@
 package edu.miu.loginservice.service.impl;
 
+import com.netflix.discovery.converters.Auto;
 import edu.miu.loginservice.constant.ErrorMessageConstant;
 import edu.miu.loginservice.constant.PatternConstant;
 import edu.miu.loginservice.dto.request.LoginRequestDTO;
 import edu.miu.loginservice.dto.request.UserRequestFeignDTO;
 import edu.miu.loginservice.dto.response.UserResponseFeignDTO;
 import edu.miu.loginservice.exception.UnauthorisedException;
-import edu.miu.loginservice.feignClient.UserFeignInterface;
 import edu.miu.loginservice.jwt.JwtTokenProvider;
+import edu.miu.loginservice.model.User;
+import edu.miu.loginservice.repository.UserRepository;
 import edu.miu.loginservice.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -38,11 +41,12 @@ public class LoginServiceImpl implements LoginService {
     JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    private UserFeignInterface userFeignInterface;
+    private UserRepository userRepository;
+
 
     @Override
     public String login(LoginRequestDTO requestDTO, HttpServletRequest request) {
-        UserResponseFeignDTO user = fetchUserDetails.apply(requestDTO);
+        User user = fetchUserDetails.apply(requestDTO);
 
         validateUsername.accept(user);
         validatePassword.accept(requestDTO, user);
@@ -53,29 +57,29 @@ public class LoginServiceImpl implements LoginService {
         return jwtToken;
     }
 
-    private final Function<LoginRequestDTO, UserResponseFeignDTO> fetchUserDetails = (loginRequestDTO) -> {
+    private final Function<LoginRequestDTO, User> fetchUserDetails = (loginRequestDTO) -> {
 
         Pattern pattern = Pattern.compile(PatternConstant.EmailConstant.EMAIL_PATTERN);
         Matcher m = pattern.matcher(loginRequestDTO.getUserCredential());
         boolean match = m.matches();
         if(!match){
-            return userFeignInterface.searchUser
-                    (UserRequestFeignDTO.builder().username(loginRequestDTO.getUserCredential()).emailAddress(null).build());
+            Optional<User> byUsername = userRepository.findByUsername(loginRequestDTO.getUserCredential());
+            return byUsername.get();
         }else{
-            return userFeignInterface.searchUser
-                    (UserRequestFeignDTO.builder().username(null).emailAddress(loginRequestDTO.getUserCredential()).build());
+            Optional<User> byEmail = userRepository.findByEmail(loginRequestDTO.getUserCredential());
+            return byEmail.get();
         }
 
 
     };
 
-    private final Consumer<UserResponseFeignDTO> validateUsername = (user) -> {
+    private final Consumer<User> validateUsername = (user) -> {
         if (Objects.isNull(user))
             throw new UnauthorisedException(ErrorMessageConstant.InvalidAdminUsername.MESSAGE,
                     ErrorMessageConstant.InvalidAdminUsername.DEVELOPER_MESSAGE);
     };
 
-    private final BiConsumer<LoginRequestDTO, UserResponseFeignDTO> validatePassword
+    private final BiConsumer<LoginRequestDTO, User> validatePassword
             = (loginRequestDTO, user) -> {
 
         LOGGER.info(":::: ADMIN PASSWORD VALIDATION ::::");

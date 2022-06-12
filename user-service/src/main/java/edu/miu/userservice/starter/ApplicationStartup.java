@@ -36,6 +36,7 @@ public class ApplicationStartup {
         return (args) -> {
             List<User> users = userRepository.findAll();
             Collection<Role> rolesList = new ArrayList<>();
+           //PERSIST ALL THE ROLES FOR THE APPLICATION
             Role faculty = roleRepository.save(new Role("FACULTY"));
             Role staff = roleRepository.save(new Role("STAFF"));
             Role student = roleRepository.save(new Role("STUDENT"));

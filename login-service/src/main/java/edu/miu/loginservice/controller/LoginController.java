@@ -6,18 +6,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.miu.loginservice.constant.WebResourceKeyConstant;
-import edu.miu.loginservice.dto.request.LoginRequestDTO;
 import edu.miu.loginservice.dto.response.UserResponseFeignDTO;
-import edu.miu.loginservice.feignClient.UserFeignInterface;
 import edu.miu.loginservice.model.Role;
+import edu.miu.loginservice.model.User;
+import edu.miu.loginservice.repository.UserRepository;
 import edu.miu.loginservice.service.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.BeanDefinitionDsl;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +20,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * @author bijayshrestha on 6/10/22
@@ -41,21 +32,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = WebResourceKeyConstant.BASE_API)
 public class LoginController {
     private final LoginService loginService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserFeignInterface userFeignInterface;
-
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, UserRepository userRepository) {
         this.loginService = loginService;
+        this.userRepository = userRepository;
     }
-
-//    @PostMapping(value = WebResourceKeyConstant.LOGIN)
-//    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO requestDTO,
-//                                            HttpServletRequest request) {
-//
-//        String token = loginService.login(requestDTO, request);
-//        return ok().body(token);
-//    }
 
     @GetMapping("/test")
     public String test() {
@@ -63,7 +45,7 @@ public class LoginController {
     }
 
 
-    @GetMapping("token/refresh")
+    @GetMapping("/login/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
@@ -75,7 +57,7 @@ public class LoginController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
-                UserResponseFeignDTO user = userFeignInterface.findUserByUsername(username);
+                User user = userRepository.findByUsername(username).get();
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))

@@ -1,7 +1,7 @@
 package edu.miu.loginservice.jwt;
 
-import edu.miu.loginservice.dto.response.UserResponseFeignDTO;
-import edu.miu.loginservice.feignClient.UserFeignInterface;
+import edu.miu.loginservice.model.User;
+import edu.miu.loginservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,11 +22,11 @@ import java.util.Collection;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserFeignInterface userFeignInterface;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserResponseFeignDTO user = userFeignInterface.findUserByUsername(username);
+        User user = userRepository.findByUsername(username).get();
         if(user==null){
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");

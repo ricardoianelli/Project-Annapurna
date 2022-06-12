@@ -1,13 +1,12 @@
-package edu.miu.userservice.model;
+package edu.miu.loginservice.model;
 
-import lombok.*;
-import org.hibernate.annotations.ManyToAny;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -35,7 +34,7 @@ public class User implements Serializable {
     @Column(name = "subscribed")
     public Boolean subscribed;
 
-    @OneToMany(fetch = EAGER)
+    @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
     public User() {

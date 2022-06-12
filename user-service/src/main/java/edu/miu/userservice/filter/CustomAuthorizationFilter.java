@@ -38,7 +38,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         System.out.println("request.getServletPath(): : " + request.getServletPath());
-        if(request.getServletPath().contains("/api/v1/users/") ||
+        if(request.getServletPath().equals("/api/v1/login") ||
                 request.getServletPath().equals("/token/refresh/**")){
             System.out.println(request.getServletPath());
             filterChain.doFilter(request, response);
@@ -49,6 +49,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 try {
                     String token = authorizationHeader.substring("Bearer ".length());
                     //MAKE SURE THE SECRET IS THE SAME, WHEN AUTHENTICATING
+                    //TODO: THE SECRET CAN BE EXTERNALIZE IN PROPERTIES OR YAML FILE
                     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
@@ -70,7 +71,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     log.error("Error logging in: {}", exception.getMessage());
                     response.setHeader("error", exception.getMessage());
                     response.setStatus(FORBIDDEN.value());
-//                response.sendError(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", exception.getMessage());
 

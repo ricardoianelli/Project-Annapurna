@@ -41,10 +41,6 @@ public class UserUtils {
         user.setUsername(userRequestDTO.getUsername());
         user.setEmail(userRequestDTO.getEmail());
         user.setSubscribed(userRequestDTO.getSubscribed());
-//        user.setPassword(BCrypt.hashpw(userRequestDTO.getPassword(), BCrypt.gensalt()));
-        if(userRequestDTO.getRoles()!=null || !userRequestDTO.getRoles().isEmpty())
-            user.setRoles(userRequestDTO.getRoles());
-
         return user;
     }
 
