@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.USER_BASE;
@@ -23,8 +24,15 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsers() {
-        List<UserResponseDTO> users = userService.getAllUsers();
+    public ResponseEntity<?> getUsers(@RequestParam("subscribed") Optional<Boolean> subscribedFilter) {
+
+        List<UserResponseDTO> users;
+
+        if (subscribedFilter.isPresent()) {
+            users = userService.getUsersBySubscription(subscribedFilter.get());
+        } else {
+            users =userService.getAllUsers();
+        }
 
         if (users.size() > 0) {
            return new ResponseEntity<>(users,
