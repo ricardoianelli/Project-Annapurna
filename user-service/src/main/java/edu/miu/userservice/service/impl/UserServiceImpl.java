@@ -4,9 +4,8 @@ import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
-import edu.miu.userservice.model.Role;
-import edu.miu.userservice.exception.InputFieldEmptyException;
 import edu.miu.userservice.exception.UserNotFoundException;
+import edu.miu.userservice.model.Role;
 import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.RoleRepository;
 import edu.miu.userservice.repository.UserRepository;
@@ -18,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
