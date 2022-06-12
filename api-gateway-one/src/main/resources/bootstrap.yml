@@ -3,6 +3,7 @@ spring:
     name: api-gateway-one
   main:
     web-application-type: reactive
+    allow-bean-definition-overriding: true
   cloud:
     config:
       uri:
@@ -25,3 +26,7 @@ spring:
           uri: lb://rating-service
           predicates:
             - Path=/api/v1/ratings/**
+        - id: login-service
+          uri: lb://login-service
+          predicates:
+            - Path=/api/v1/login/**

@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 @Data
 public class UserResponseDTO implements Serializable {
+    private Long id;
     private String name;
     private String email;
     private Boolean subscribed;

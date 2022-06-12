@@ -14,11 +14,11 @@
         <module>eureka-server-two</module>
         <module>config-server</module>
         <module>api-gateway-one</module>
+        <module>login-service</module>
         <module>user-service</module>
         <module>email-service</module>
         <module>etl-service</module>
         <module>rating-service</module>
-        <module>auth-server</module>
     </modules>
 
 </project>
