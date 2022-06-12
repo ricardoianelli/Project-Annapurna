@@ -49,13 +49,13 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @PostMapping(value = WebResourceKeyConstant.LOGIN)
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO requestDTO,
-                                            HttpServletRequest request) {
-
-        String token = loginService.login(requestDTO, request);
-        return ok().body(token);
-    }
+//    @PostMapping(value = WebResourceKeyConstant.LOGIN)
+//    public ResponseEntity<String> loginUser(@RequestBody LoginRequestDTO requestDTO,
+//                                            HttpServletRequest request) {
+//
+//        String token = loginService.login(requestDTO, request);
+//        return ok().body(token);
+//    }
 
     @GetMapping("/test")
     public String test() {

@@ -17,4 +17,8 @@ public class ApiGatewayOneApplication {
 		SpringApplication.run(ApiGatewayOneApplication.class, args);
 	}
 
+//	@Bean
+//	public BCryptPasswordEncoder passwordEncoder(){
+//		return new BCryptPasswordEncoder();
+//	}
 }

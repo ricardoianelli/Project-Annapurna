@@ -1,7 +1,6 @@
-package edu.miu.loginservice.config;
+package edu.miu.userservice.config;
 
-import edu.miu.loginservice.filter.CustomAuthenticationFilter;
-import edu.miu.loginservice.filter.CustomAuthorizationFilter;
+import edu.miu.userservice.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,18 +36,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter =
-                new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
+//        CustomAuthenticationFilter customAuthenticationFilter =
+//                new CustomAuthenticationFilter(authenticationManagerBean());
+//        customAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth");
         http.csrf().disable();
+        http.httpBasic().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/user-service/**").permitAll();
+        http.authorizeRequests().antMatchers("/login-service/api/v1/**").permitAll();
         http.authorizeRequests().antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(GET, "/api/v1/users/**").hasAnyAuthority("FACULTY");
         http.authorizeRequests().antMatchers(GET, "/api/v1/email/**").hasAnyAuthority("STUDENT");
         http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter( new CustomAuthenticationFilter(authenticationManagerBean()));
-        http.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
