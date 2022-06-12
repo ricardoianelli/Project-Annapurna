@@ -15,5 +15,4 @@ public class UserRequestDTO implements Serializable {
     private String password;
     private String email;
     private Boolean subscribed;
-    private Collection<Role> roles;
 }

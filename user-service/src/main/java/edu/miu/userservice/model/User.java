@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "subscribed")
     public Boolean subscribed;
 
-    @OneToMany(fetch = EAGER)
+    @ManyToMany(fetch = EAGER, cascade = CascadeType.REMOVE)
     private Collection<Role> roles = new ArrayList<>();
 
     public User() {
