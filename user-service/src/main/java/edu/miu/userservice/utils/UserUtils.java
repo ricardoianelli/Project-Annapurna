@@ -1,10 +1,13 @@
 package edu.miu.userservice.utils;
 
+import com.netflix.discovery.converters.Auto;
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +16,10 @@ import java.util.function.Function;
 
 
 public class UserUtils {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public static List<UserResponseDTO> parseUserToUserResponseDTO(List<User> users){
         List<UserResponseDTO> userResponseDTOList = new ArrayList<>();
         for (User user :
@@ -34,7 +41,7 @@ public class UserUtils {
         user.setUsername(userRequestDTO.getUsername());
         user.setEmail(userRequestDTO.getEmail());
         user.setSubscribed(userRequestDTO.getSubscribed());
-        user.setPassword(BCrypt.hashpw(userRequestDTO.getPassword(), BCrypt.gensalt()));
+//        user.setPassword(BCrypt.hashpw(userRequestDTO.getPassword(), BCrypt.gensalt()));
         if(userRequestDTO.getRoles()!=null || !userRequestDTO.getRoles().isEmpty())
             user.setRoles(userRequestDTO.getRoles());
 

@@ -1,5 +1,6 @@
 package edu.miu.userservice.dto.response;
 
+import edu.miu.userservice.model.Role;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,5 +23,5 @@ public class UserResponseFeignDTO implements Serializable {
     private String name;
     private String email;
     private Boolean subscribed;
-    private List<String> roles  = new ArrayList<>();
+    private Collection<Role> roles  = new ArrayList<>();
 }

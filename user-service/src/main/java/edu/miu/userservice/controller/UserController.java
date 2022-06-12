@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping(value = FETCH_USER_BY_USERNAME)
-    public ResponseEntity<?> fetchAdminByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<?> fetchUserByUsername(@PathVariable("username") String username) {
         return ok(userService.getUserByUsername(username));
     }
 

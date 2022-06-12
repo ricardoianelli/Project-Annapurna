@@ -8,12 +8,11 @@ import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
 import edu.miu.userservice.utils.UserUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
@@ -23,9 +22,12 @@ import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String addUser(UserRequestDTO userRequestDTO) {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
         if(user!= null){
             //TODO: CHANGE RETURN TYPE TO VOID
@@ -75,6 +78,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
             user.setId(id);
+            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
             userRepository.save(user);
         }else{
             //TODO: NEED TO DO EXCEPTION HANDLING
