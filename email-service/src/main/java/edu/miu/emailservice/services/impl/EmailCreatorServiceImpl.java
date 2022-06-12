@@ -4,7 +4,9 @@ import edu.miu.emailservice.domain.DailyMeal;
 import edu.miu.emailservice.domain.Email;
 import edu.miu.emailservice.domain.User;
 import edu.miu.emailservice.services.EmailCreatorService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailCreatorServiceImpl implements EmailCreatorService {
     @Override
     public Email create(User user, DailyMeal dailyMeal) {
