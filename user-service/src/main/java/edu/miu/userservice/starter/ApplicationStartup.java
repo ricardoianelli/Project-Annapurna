@@ -3,6 +3,7 @@ package edu.miu.userservice.starter;
 import edu.miu.userservice.config.StartupProperties;
 import edu.miu.userservice.model.Role;
 import edu.miu.userservice.model.User;
+import edu.miu.userservice.repository.RoleRepository;
 import edu.miu.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,11 +32,17 @@ public class ApplicationStartup {
     private PasswordEncoder passwordEncoder;
 
     @Bean
-    public CommandLineRunner loadData(UserRepository userRepository) {
+    public CommandLineRunner loadData(UserRepository userRepository, RoleRepository roleRepository) {
         return (args) -> {
             List<User> users = userRepository.findAll();
             Collection<Role> rolesList = new ArrayList<>();
-            rolesList.add(new Role("FACULTY"));
+            Role faculty = roleRepository.save(new Role("FACULTY"));
+            Role staff = roleRepository.save(new Role("STAFF"));
+            Role student = roleRepository.save(new Role("STUDENT"));
+
+            rolesList.add(faculty);
+            rolesList.add(staff);
+            rolesList.add(student);
             //TODO: This is weird here!
             System.out.println("Name : " + startupProperties.getName());
             if (ObjectUtils.isEmpty(users)) {

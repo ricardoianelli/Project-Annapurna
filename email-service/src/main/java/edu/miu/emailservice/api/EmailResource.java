@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @project cs544-project
  */
 @RestController
-@RequestMapping("/email")
+@RequestMapping("api/v1/email")
 public class EmailResource {
 
     @GetMapping

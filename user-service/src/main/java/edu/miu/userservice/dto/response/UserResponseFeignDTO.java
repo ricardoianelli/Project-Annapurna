@@ -1,7 +1,9 @@
 package edu.miu.userservice.dto.response;
 
 import edu.miu.userservice.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,8 @@ import java.util.List;
  * @project cs544-project
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResponseFeignDTO implements Serializable {
     private Long id;
     private String username;
