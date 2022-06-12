@@ -1,7 +1,6 @@
 package edu.miu.loginservice.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -9,8 +8,9 @@ import java.io.Serializable;
  * @author bijayshrestha on 6/10/22
  * @project cs544-project
  */
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginRequestDTO implements Serializable {
     private String userCredential;
     private String password;

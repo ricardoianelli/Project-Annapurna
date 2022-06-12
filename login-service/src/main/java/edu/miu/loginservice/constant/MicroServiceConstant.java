@@ -10,5 +10,6 @@ public class MicroServiceConstant {
     public interface UserServiceConstants {
         String USER_SERVICE = "user-service";
         String SEARCH_USER = "api/v1/users/search";
+        String GET_USER_BY_USERNAME = "api/v1/users/username/{username}";
     }
 }

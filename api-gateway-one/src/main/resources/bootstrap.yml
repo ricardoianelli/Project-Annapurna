@@ -3,6 +3,7 @@ spring:
     name: api-gateway-one
   main:
     web-application-type: reactive
+    allow-bean-definition-overriding: true
   cloud:
     config:
       uri:

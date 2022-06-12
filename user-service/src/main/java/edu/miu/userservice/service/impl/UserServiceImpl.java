@@ -4,16 +4,21 @@ import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
+import edu.miu.userservice.exception.UserNotFoundException;
+import edu.miu.userservice.model.Role;
 import edu.miu.userservice.model.User;
+import edu.miu.userservice.repository.RoleRepository;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
 import edu.miu.userservice.utils.UserUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
@@ -23,9 +28,14 @@ import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -36,13 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) {
-        User user = userRepository.findById(id).get();
-        if(user != null){
+    public UserResponseDTO getUserById(Long id) throws UserNotFoundException {
+        try {
+            User user = userRepository.findById(id).get();
             return UserUtils.parseUserToUserResponseDTO(user);
-        }else{
-            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
-            return new UserResponseDTO();
+        } catch (NoSuchElementException ex) {
+            throw new UserNotFoundException();
         }
     }
 
@@ -59,7 +68,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String addUser(UserRequestDTO userRequestDTO) {
+        //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        List<Role> finalRoles = new ArrayList<>();
+        user.getRoles().forEach(role->{
+            Optional<Role> role1 = roleRepository.findByName(role.getName());
+            if( role1.get()!= null){
+                finalRoles.add(role1.get());
+            }else{
+                finalRoles.add(role);
+            }
+        });
+        roleRepository.saveAll(user.getRoles());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
         if(user!= null){
             //TODO: CHANGE RETURN TYPE TO VOID
@@ -75,6 +96,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
             user.setId(id);
+            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
             userRepository.save(user);
         }else{
             //TODO: NEED TO DO EXCEPTION HANDLING
@@ -85,13 +107,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String deleteUser(Long id) {
-        User user = userRepository.findById(id).get();
-        if(user != null){
+        try {
+            User user = userRepository.findById(id).get();
             userRepository.delete(user);
-            //CHANGE RETURN TYPE TO VOID LATER
             return "User Deleted Successfully!";
-        }else{
-            return "User Not Found. ";
+        } catch (NoSuchElementException ex) {
+            throw new UserNotFoundException();
         }
     }
 
