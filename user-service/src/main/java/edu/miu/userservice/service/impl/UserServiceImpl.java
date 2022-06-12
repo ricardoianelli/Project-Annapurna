@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -56,9 +57,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseFeignDTO getUserByUsername(String username) {
         User user = userRepository.findByUsername(username).get();
-        if(user != null){
+        if (user != null) {
             return UserUtils.parseUserToUserResponseFeignDTO(user);
-        }else{
+        } else {
             //TODO: IMPLEMENT EXCEPTION HANDLING HERE
             return new UserResponseFeignDTO();
         }
@@ -69,21 +70,21 @@ public class UserServiceImpl implements UserService {
         //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         List<Role> finalRoles = new ArrayList<>();
-        user.getRoles().forEach(role->{
+        user.getRoles().forEach(role -> {
             Optional<Role> role1 = roleRepository.findByName(role.getName());
-            if( role1.get()!= null){
+            if (role1.get() != null) {
                 finalRoles.add(role1.get());
-            }else{
+            } else {
                 finalRoles.add(role);
             }
         });
         roleRepository.saveAll(user.getRoles());
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
-        if(user!= null){
+        if (user != null) {
             //TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
-        } else{
+        } else {
             return "Sorry, something went wrong";
         }
     }
@@ -91,12 +92,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
         User user = userRepository.findById(id).get();
-        if(user != null){
+        if (user != null) {
             user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
             user.setId(id);
             user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
             userRepository.save(user);
-        }else{
+        } else {
             //TODO: NEED TO DO EXCEPTION HANDLING
             return new UserResponseDTO();
         }
@@ -123,14 +124,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseFeignDTO searchUser(UserRequestFeignDTO userRequestFeignDTO) {
         User user = null;
-        if(userRequestFeignDTO.getEmailAddress()!= null){
+        if (userRequestFeignDTO.getEmailAddress() != null) {
             user = userRepository.findByEmail(userRequestFeignDTO.getEmailAddress()).get();
-        }else {
+        } else {
             user = userRepository.findByUsername(userRequestFeignDTO.getUsername()).get();
         }
         //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
         return convertToUserResponseFeignDTO.apply(user);
     }
-
-
 }
