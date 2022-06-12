@@ -7,5 +7,7 @@ public class WebResourceKeyConstant {
 
     public interface UserConstants {
         String USER_BASE = "/users";
+        String FETCH_USER_BY_USERNAME = "/username/{username}";
+        String SEARCH = "/search";
     }
 }

@@ -7,3 +7,8 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://localhost:9092/eureka
+
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF

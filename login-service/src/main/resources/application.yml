@@ -1,0 +1,10 @@
+server:
+  port: 9090
+
+##44hrs
+#feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 160000000
+#        readTimeout: 160000000
