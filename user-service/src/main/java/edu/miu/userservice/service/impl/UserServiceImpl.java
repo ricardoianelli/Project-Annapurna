@@ -11,7 +11,6 @@ import edu.miu.userservice.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,12 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        if (users.size() != 0) {
-            List<UserResponseDTO> userResponseDTOS = UserUtils.parseUserToUserResponseDTO(users);
-            return userResponseDTOS;
-        }
-
-        return new ArrayList<>();
+        return UserUtils.parseUserToUserResponseDTO(users);
     }
 
     @Override
