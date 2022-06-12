@@ -92,4 +92,10 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException();
         }
     }
+
+    @Override
+    public List<UserResponseDTO> getUsersBySubscription(boolean subscribed) {
+        List<User> users = userRepository.findBySubscribed(subscribed);
+        return UserUtils.parseUserToUserResponseDTO(users);
+    }
 }

@@ -17,4 +17,6 @@ public interface UserService {
     UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id);
 
     String deleteUser(Long id);
+
+    List<UserResponseDTO> getUsersBySubscription(boolean subscribed);
 }
