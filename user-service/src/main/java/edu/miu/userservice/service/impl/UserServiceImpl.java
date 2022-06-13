@@ -12,6 +12,7 @@ import edu.miu.userservice.repository.RoleRepository;
 import edu.miu.userservice.repository.UserRepository;
 import edu.miu.userservice.service.UserService;
 import edu.miu.userservice.utils.UserUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,20 +27,12 @@ import static edu.miu.userservice.utils.UserUtils.parseUserToUserResponseDTO;
 
 @Service
 @Transactional
-//TODO: REFACTORING REQUIRED
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-
-    public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder,
-                           RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
