@@ -18,8 +18,8 @@ public class RatingUtils {
 
     public static Rating parseRatingRequestDTOToRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = new Rating();
-        rating.setDailyMeal(ratingRequestDTO.getDailyMealId());
-        rating.setUser(ratingRequestDTO.getUserId());
+        rating.setDailyMealId(ratingRequestDTO.getDailyMealId());
+        rating.setUserId(ratingRequestDTO.getUserId());
         rating.setRating(ratingRequestDTO.getRating());
         return rating;
     }
@@ -34,8 +34,8 @@ public class RatingUtils {
 
     public static RatingResponseDTO parseRatingToRatingResponseDTOObject(Rating rating) {
         RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
-        ratingResponseDTO.setDailyMealId(rating.getDailyMeal());
-        ratingResponseDTO.setUserId(rating.getUser());
+        ratingResponseDTO.setDailyMealId(rating.getDailyMealId());
+        ratingResponseDTO.setUserId(rating.getUserId());
         ratingResponseDTO.setRating(rating.getRating());
         return ratingResponseDTO;
     }
