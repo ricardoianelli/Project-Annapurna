@@ -1,17 +1,13 @@
 package edu.miu.ratingservice.service.impl;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.model.Rating;
 import edu.miu.ratingservice.repository.RatingRepository;
 import edu.miu.ratingservice.service.RatingService;
 import edu.miu.ratingservice.utils.RatingUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -22,28 +18,10 @@ public class RatingServiceImpl implements RatingService {
         this.ratingRepository = ratingRepository;
     }
 
-    // @Override
-    // public List<RatingResponseDTO> getRatingsByMeal(Long id) {
-
-    // return null;
-    // }
-
-    // @Override
-    // public List<RatingResponseDTO> getRatingsByDay() {
-    // return null;
-    // }
-
-    // @Override
-    // public List<RatingResponseDTO> getRatingsByUser(Long id) {
-    // Rating rating = ratingRepository.findByUser(id).get();
-    // return (List<RatingResponseDTO>)
-    // RatingUtils.parseRatingToRatingReponseDTOObject(rating);
-    // }
-
     @Override
     public RatingResponseDTO getRatingById(Long id) {
         Rating rating = ratingRepository.findById(id).get();
-        return RatingUtils.parseRatingToRatingReponseDTOObject(rating);
+        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
     }
 
     @Override

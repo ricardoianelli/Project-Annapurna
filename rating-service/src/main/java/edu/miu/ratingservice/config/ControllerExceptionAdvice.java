@@ -1,5 +1,6 @@
 package edu.miu.ratingservice.config;
 
+import edu.miu.ratingservice.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,14 +18,6 @@ public class ControllerExceptionAdvice {
     public ResponseEntity<StandardError> handleUsersNotFound(UserNotFoundException ex, HttpServletRequest request) {
         String errorMsg = "User not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        return getResponseError(errorMsg, status, request);
-    }
-
-    @ExceptionHandler(InputFieldEmptyException.class)
-    public ResponseEntity<StandardError> handleInputFieldEntity(InputFieldEmptyException ex,
-            HttpServletRequest request) {
-        String errorMsg = "Input Field is Empty";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
         return getResponseError(errorMsg, status, request);
     }
 

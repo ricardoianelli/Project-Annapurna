@@ -17,7 +17,6 @@ public class Rating implements Serializable {
     private Double rating;
 
     public Rating() {
-
     }
 
     public Rating(String dailyMeal, String user, Double rating) {

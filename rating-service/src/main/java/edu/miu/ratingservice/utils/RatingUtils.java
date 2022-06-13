@@ -11,11 +11,7 @@ public class RatingUtils {
     public static List<RatingResponseDTO> parseRatingToRatingResponseDTO(List<Rating> ratings) {
         List<RatingResponseDTO> ratingResponseDTOList = new ArrayList<>();
         for (Rating rating : ratings) {
-            RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
-            ratingResponseDTO.setDailyMeal(rating.getDailyMeal());
-            ratingResponseDTO.setUser(rating.getUser());
-            ratingResponseDTO.setRating(rating.getRating());
-            ratingResponseDTOList.add(ratingResponseDTO);
+            ratingResponseDTOList.add(parseRatingToRatingResponseDTOObject(rating));
         }
         return ratingResponseDTOList;
     }
