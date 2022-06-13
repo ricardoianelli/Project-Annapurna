@@ -19,13 +19,7 @@ public class SubscribersServiceImpl implements SubscribersService {
 
     @Override
     public List<UserResponseDTO> getSubscribersList() {
-        Optional<HttpServletRequest> originalRequestOptional = RequestHelper.getCurrentHttpRequest();
-        if (!originalRequestOptional.isPresent()) {
-            return new ArrayList<>();
-        }
-
-        HttpServletRequest originalRequest = originalRequestOptional.get();
-        String token = originalRequest.getHeader("Authorization");
+        String token = RequestHelper.getAuthenticationToken();
         Map<String,String> requestParams = new HashMap<>();
         requestParams.put("subscribed", Boolean.valueOf(true).toString());
         return userClient.getUsers(token, requestParams);
