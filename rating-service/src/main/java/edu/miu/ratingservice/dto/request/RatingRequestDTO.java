@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class RatingRequestDTO implements Serializable {
-    private String dailyMealId;
-    private String userId;
+    private Long dailyMealId;
+    private Long userId;
     private Double rating;
 }

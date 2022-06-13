@@ -11,17 +11,17 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private String dailyMealId;
-    private String userId;
+    private Long dailyMealId;
+    private Long userId;
 
     private Double rating;
 
     public Rating() {
     }
 
-    public Rating(String dailyMeal, String user, Double rating) {
-        this.dailyMealId = dailyMeal;
-        this.userId = user;
+    public Rating(Long dailyMealId, Long userId, Double rating) {
+        this.dailyMealId = dailyMealId;
+        this.userId = userId;
         this.rating = rating;
     }
 
