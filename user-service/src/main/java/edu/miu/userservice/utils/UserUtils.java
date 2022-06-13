@@ -1,33 +1,26 @@
 package edu.miu.userservice.utils;
 
-import com.netflix.discovery.converters.Auto;
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
 
 public class UserUtils {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public static List<UserResponseDTO> parseUserToUserResponseDTO(List<User> users){
         List<UserResponseDTO> userResponseDTOList = new ArrayList<>();
-        for (User user :
-                users) {
+        for (User user : users) {
             UserResponseDTO userResponseDTO = new UserResponseDTO();
             userResponseDTO.setId(user.getId());
             userResponseDTO.setName(user.getName());
             userResponseDTO.setEmail(user.getEmail());
+            userResponseDTO.setUsername(user.getUsername());
+            userResponseDTO.setPassword(user.getPassword());
             userResponseDTO.setSubscribed(user.getSubscribed());
             userResponseDTOList.add(userResponseDTO);
         }

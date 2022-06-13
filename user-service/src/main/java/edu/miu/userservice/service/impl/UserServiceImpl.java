@@ -19,11 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static edu.miu.userservice.constant.ExceptionConstant.NOT_FOUND;
+import static edu.miu.userservice.constant.ExceptionConstant.USER_NOT_FOUND_MESSAGE;
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
+import static edu.miu.userservice.utils.UserUtils.parseUserToUserResponseDTO;
 
 @Service
 @Transactional
-//TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE TESTING
+//TODO: REFACTORING REQUIRED
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -31,7 +34,8 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+                           PasswordEncoder passwordEncoder,
+                           RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findById(id).get();
             return UserUtils.parseUserToUserResponseDTO(user);
         } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(NOT_FOUND,USER_NOT_FOUND_MESSAGE );
         }
     }
 
@@ -65,17 +69,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String addUser(UserRequestDTO userRequestDTO) {
+    public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
         //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
-        if (user != null) {
-            //TODO: CHANGE RETURN TYPE TO VOID
-            return "User Created Successfully!";
-        } else {
-            return "Sorry, something went wrong";
-        }
+        return parseUserToUserResponseDTO(user);
     }
 
     @Override

@@ -18,7 +18,7 @@ import static edu.miu.emailservice.constant.WebResourceKeyConstant.UserConstants
 
 @RestController
 @RequestMapping(value = API_V1 + EMAIL_BASE)
-@Api(value = "Item Resource to handle all Item related action and queries ")
+@Api(value = "Email Resource to handle all email related action and queries ")
 public class EmailController {
     final EmailServicesFacade emailServicesFacade;
 
