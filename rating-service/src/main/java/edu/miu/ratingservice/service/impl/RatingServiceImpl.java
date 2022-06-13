@@ -76,7 +76,7 @@ public class RatingServiceImpl implements RatingService {
 
     private void checkMealExists(Long id) {
         try {
-            dailyMealClient.getDailyMealById(id);
+            DailyMealResponseDTO dailymeal = dailyMealClient.getDailyMealById(id);
         } catch (FeignException.NotFound ex) {
             throw new MealNotFoundException();
         }

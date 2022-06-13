@@ -22,13 +22,13 @@ public class EtlController {
     }
 
     @PostMapping("/fetch")
-    public ResponseEntity<?> fetch(){
+    public ResponseEntity<?> fetch() {
         etlService.fetch();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("dailymeal")
-    public ResponseEntity<?> getDailyMeals(){
+    public ResponseEntity<?> getDailyMeals() {
         List<DailyMealDTO> dailyMeal = etlService.getDailyMeals();
         if (dailyMeal.size() == 0) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -38,7 +38,7 @@ public class EtlController {
     }
 
     @GetMapping("dailymeal/{id}")
-    public ResponseEntity<?> getDailyMealById(@PathVariable Long id){
+    public ResponseEntity<?> getDailyMealById(@PathVariable Long id) {
         DailyMealDTO dailyMeal = etlService.getDailyMealById(id);
         return new ResponseEntity<>(dailyMeal, HttpStatus.OK);
     }
