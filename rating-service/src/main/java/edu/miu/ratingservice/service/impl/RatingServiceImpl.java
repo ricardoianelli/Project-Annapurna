@@ -1,9 +1,12 @@
 package edu.miu.ratingservice.service.impl;
 
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
+import edu.miu.ratingservice.dto.response.DailyMealResponseDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.dto.response.UserResponseDTO;
+import edu.miu.ratingservice.exception.MealNotFoundException;
 import edu.miu.ratingservice.exception.UserNotFoundException;
+import edu.miu.ratingservice.feignclients.DailyMealClient;
 import edu.miu.ratingservice.feignclients.UserClient;
 import edu.miu.ratingservice.model.Rating;
 import edu.miu.ratingservice.repository.RatingRepository;
@@ -20,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class RatingServiceImpl implements RatingService {
     private final RatingRepository ratingRepository;
     private final UserClient userClient;
+    private final DailyMealClient dailyMealClient;
 
-    public RatingServiceImpl(RatingRepository ratingRepository, UserClient userClient) {
+    public RatingServiceImpl(RatingRepository ratingRepository, UserClient userClient,
+            DailyMealClient dailyMealClient) {
         this.ratingRepository = ratingRepository;
         this.userClient = userClient;
+        this.dailyMealClient = dailyMealClient;
     }
 
     @Override
@@ -35,16 +41,10 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public RatingResponseDTO addRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
-        try {
-            if (checkUserExists(rating.getId())) {
-                rating = ratingRepository.save(rating);
-                return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
-            }
-
-        } catch (FeignException.NotFound ex) {
-            throw new UserNotFoundException();
-        }
-        return null;
+        checkUserExists(rating.getUserId());
+        checkMealExists(rating.getDailyMealId());
+        rating = ratingRepository.save(rating);
+        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
     }
 
     @Override
@@ -66,8 +66,19 @@ public class RatingServiceImpl implements RatingService {
         return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
     }
 
-    private boolean checkUserExists(Long id) {
-        UserResponseDTO user = userClient.getUserById(id);
-        return user != null;
+    private void checkUserExists(Long id) {
+        try {
+            userClient.getUserById(id);
+        } catch (FeignException.NotFound ex) {
+            throw new UserNotFoundException();
+        }
+    }
+
+    private void checkMealExists(Long id) {
+        try {
+            dailyMealClient.getDailyMealById(id);
+        } catch (FeignException.NotFound ex) {
+            throw new MealNotFoundException();
+        }
     }
 }
