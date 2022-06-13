@@ -25,10 +25,10 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public String addRating(RatingRequestDTO ratingRequestDTO) {
+    public RatingResponseDTO addRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
         rating = ratingRepository.save(rating);
-        return "Rating Added";
+        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class RatingServiceImpl implements RatingService {
         Rating rating = ratingRepository.findById(id).get();
         rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
         rating.setId(id);
-        rating.setDailyMeal(ratingRequestDTO.getDailyMealId());
-        rating.setUser(ratingRequestDTO.getUserId());
+        rating.setDailyMealId(ratingRequestDTO.getDailyMealId());
+        rating.setUserId(ratingRequestDTO.getUserId());
         rating.setRating(ratingRequestDTO.getRating());
         ratingRepository.save(rating);
         return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO);

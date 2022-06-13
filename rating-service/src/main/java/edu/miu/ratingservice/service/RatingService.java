@@ -6,7 +6,7 @@ import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 public interface RatingService {
     RatingResponseDTO getRatingById(Long id);
 
-    String addRating(RatingRequestDTO ratingRequestDTO);
+    RatingResponseDTO addRating(RatingRequestDTO ratingRequestDTO);
 
     RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id);
 
