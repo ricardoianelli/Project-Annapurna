@@ -34,10 +34,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponseDTO saveRole(RoleRequestDTO roleRequestDTO){
         Role roleRequest = modelMapper.map(roleRequestDTO, Role.class);
         Role role = roleRepository.save(roleRequest);
-        //TODO: Remove this after testing.
-        RoleResponseDTO roleResponse = modelMapper.map(role, RoleResponseDTO.class);
-
-        return roleResponse;
+        return modelMapper.map(role, RoleResponseDTO.class);
     }
     @Override
     public List<Role> getAllRoles(){
@@ -52,9 +49,7 @@ public class RoleServiceImpl implements RoleService {
         role.setName(roleRequestUpdateDTO.getName());
         role.setStatus(roleRequestUpdateDTO.isStatus());
         roleRepository.save(role);
-        //REMOVE THIS WHEN ETH IS WORKING FINE
-        RoleResponseDTO roleResponse = modelMapper.map(role, RoleResponseDTO.class);
-        return roleResponse;
+        return modelMapper.map(role, RoleResponseDTO.class);
     }
 
     @Override
@@ -71,7 +66,7 @@ public class RoleServiceImpl implements RoleService {
         if (role.isPresent()) {
             return role.get();
         }else{
-            throw new Exception("Throw some nice erro!");
+            throw new Exception("Throw some nice error!");
         }
     }
 
