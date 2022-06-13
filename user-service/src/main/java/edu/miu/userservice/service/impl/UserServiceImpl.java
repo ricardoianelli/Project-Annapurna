@@ -23,7 +23,8 @@ import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
 @Service
 @Transactional
-//TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE TESTING
+// TODO: REFACTORING REQUIRED AFTER WE DONE WITH ALL THE POSITIVE AND NEGATIVE
+// TESTING
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+            PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -59,19 +60,19 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return UserUtils.parseUserToUserResponseFeignDTO(user);
         } else {
-            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
+            // TODO: IMPLEMENT EXCEPTION HANDLING HERE
             return new UserResponseFeignDTO();
         }
     }
 
     @Override
     public String addUser(UserRequestDTO userRequestDTO) {
-        //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
+        // TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
         if (user != null) {
-            //TODO: CHANGE RETURN TYPE TO VOID
+            // TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
         } else {
             return "Sorry, something went wrong";
@@ -113,13 +114,13 @@ public class UserServiceImpl implements UserService {
         } else {
             user = userRepository.findByUsername(userRequestFeignDTO.getUsername());
         }
-        //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
+        // TODO:EXCEPTION NEEDS TO BE HANDLED HERE
         return convertToUserResponseFeignDTO.apply(user);
     }
 
     @Override
     public void addUserRole(UserRoleRequestDTO userRoleRequestDTO) {
-        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        // TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
         User user = userRepository.findByUsername(userRoleRequestDTO.getUsername());
         Role role = roleRepository.findByName(userRoleRequestDTO.getRoleName());
         user.getRoles().add(role);
@@ -127,11 +128,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUserRole(String username, Long roleId) {
-        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        // TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findById(roleId).get();
         user.getRoles().remove(role);
     }
-
 
 }
