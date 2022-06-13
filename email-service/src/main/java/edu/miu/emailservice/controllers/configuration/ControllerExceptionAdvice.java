@@ -1,6 +1,7 @@
 package edu.miu.emailservice.controllers.configuration;
 
 import edu.miu.emailservice.exceptions.NoDailyMealsException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,11 +13,19 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerExceptionAdvice {
     @ExceptionHandler(NoDailyMealsException.class)
-    public ResponseEntity<StandardError> handleUsersNotFound(NoDailyMealsException ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> noMealInformationFound(NoDailyMealsException ex, HttpServletRequest request) {
         String errorMsg = ex.getMessage();
         HttpStatus status = HttpStatus.FAILED_DEPENDENCY;
         return getResponseError(errorMsg, status, request);
     }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<StandardError> communicateWithOtherServiceFailed(FeignException ex, HttpServletRequest request) {
+        String errorMsg = ex.getMessage();
+        HttpStatus status = HttpStatus.FAILED_DEPENDENCY;
+        return getResponseError(errorMsg, status, request);
+    }
+
 
     private ResponseEntity<StandardError> getResponseError(String message, HttpStatus status,
                                                            HttpServletRequest request) {

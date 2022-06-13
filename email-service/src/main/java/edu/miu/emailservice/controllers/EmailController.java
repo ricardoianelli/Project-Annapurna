@@ -22,6 +22,6 @@ public class EmailController {
     @PostMapping("/send")
     public ResponseEntity<?> sendEmails(){
         emailServicesFacade.sendEmailToSubscribers();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
