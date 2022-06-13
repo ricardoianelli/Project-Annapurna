@@ -36,6 +36,6 @@ public class EmailController {
     })
     public ResponseEntity<?> sendEmails(){
         emailServicesFacade.sendEmailToSubscribers();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
