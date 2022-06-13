@@ -2,6 +2,8 @@ package edu.miu.userservice.controller;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.request.UserRequestFeignDTO;
+import edu.miu.userservice.dto.request.UserRoleRequestDTO;
+import edu.miu.userservice.dto.response.ApiResponse;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -74,5 +76,21 @@ public class UserController {
     @PostMapping(value = SEARCH)
     public ResponseEntity<?> searchUser(@RequestBody UserRequestFeignDTO requestDTO) {
         return ok().body(userService.searchUser(requestDTO));
+    }
+
+    @PostMapping("/roles")
+    public ResponseEntity<?> addUserRole(@RequestBody UserRoleRequestDTO userRoleRequestDTO){
+        userService.addUserRole(userRoleRequestDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/username/{username}/roles/{roleId}")
+    public ResponseEntity<ApiResponse> removeUserRole(@PathVariable String username, @PathVariable Long roleId){
+        userService.removeUserRole(username, roleId);
+        ApiResponse apiResponse = new ApiResponse(
+                Boolean.TRUE,
+                "Role removed successfully",
+                HttpStatus.OK);
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.OK);
     }
 }

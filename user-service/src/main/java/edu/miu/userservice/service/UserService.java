@@ -2,8 +2,11 @@ package edu.miu.userservice.service;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.request.UserRequestFeignDTO;
+import edu.miu.userservice.dto.request.UserRoleRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
+import edu.miu.userservice.model.Role;
+import edu.miu.userservice.model.User;
 
 import java.util.List;
 
@@ -24,4 +27,9 @@ public interface UserService {
     UserResponseFeignDTO searchUser(UserRequestFeignDTO requestDTO);
 
     List<UserResponseDTO> getUsersBySubscription(boolean subscribed);
+
+    void addUserRole(UserRoleRequestDTO userRoleRequestDTO);
+
+    void removeUserRole(String username, Long roleId);
+
 }

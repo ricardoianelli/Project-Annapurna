@@ -23,8 +23,10 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private boolean status;
 
-    public Role(String name) {
+    public Role(String name, boolean status) {
         this.name = name;
+        this.status = status;
     }
 }
