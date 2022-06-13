@@ -5,6 +5,7 @@ import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.request.UserRoleRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
+import edu.miu.userservice.exception.UserNotFoundException;
 import edu.miu.userservice.model.Role;
 import edu.miu.userservice.model.User;
 import edu.miu.userservice.repository.RoleRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
@@ -44,13 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) {
-        User user = userRepository.findById(id).get();
-        if(user != null){
+    public UserResponseDTO getUserById(Long id) throws UserNotFoundException {
+        try {
+            User user = userRepository.findById(id).get();
             return UserUtils.parseUserToUserResponseDTO(user);
-        }else{
-            //TODO: IMPLEMENT EXCEPTION HANDLING HERE
-            return new UserResponseDTO();
+        } catch (NoSuchElementException ex) {
+            throw new UserNotFoundException();
         }
     }
 
@@ -96,13 +97,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String deleteUser(Long id) {
-        User user = userRepository.findById(id).get();
-        if(user != null){
+        try {
+            User user = userRepository.findById(id).get();
             userRepository.delete(user);
-            //CHANGE RETURN TYPE TO VOID LATER
             return "User Deleted Successfully!";
-        }else{
-            return "User Not Found. ";
+        } catch (NoSuchElementException ex) {
+            throw new UserNotFoundException();
         }
     }
 
