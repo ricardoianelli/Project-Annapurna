@@ -28,4 +28,6 @@ public interface UserService {
 
     void addUserRole(UserRoleRequestDTO userRoleRequestDTO);
 
+    void removeUserRole(String username, Long roleId);
+
 }

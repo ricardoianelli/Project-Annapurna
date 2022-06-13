@@ -83,15 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
         User user = userRepository.findById(id).get();
-        if(user != null){
-            user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-            user.setId(id);
-            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-            userRepository.save(user);
-        }else{
-            //TODO: NEED TO DO EXCEPTION HANDLING
-            return new UserResponseDTO();
-        }
+        user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        user.setId(id);
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        userRepository.save(user);
         return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO, id);
     }
 
@@ -124,6 +119,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(userRoleRequestDTO.getUsername());
         Role role  = roleRepository.findByName(userRoleRequestDTO.getRoleName());
         user.getRoles().add(role);
+    }
+
+    @Override
+    public void removeUserRole(String username, Long roleId){
+        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        User user = userRepository.findByUsername(username);
+        Role role  = roleRepository.findById(roleId).get();
+        user.getRoles().remove(role);
     }
 
 
