@@ -5,7 +5,6 @@ import edu.miu.emailservice.domain.DineMeals;
 import edu.miu.emailservice.dto.DailyMealDTO;
 import edu.miu.emailservice.exceptions.NoDailyMealsException;
 import edu.miu.emailservice.feignclients.EtlClient;
-import edu.miu.emailservice.helpers.RequestHelper;
 import edu.miu.emailservice.services.DailyMealFetchService;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +50,7 @@ public class DailyMealFetchServiceImpl implements DailyMealFetchService {
 
     @Override
     public DailyMeal getDailyMeals() {
-        String token = RequestHelper.getAuthenticationToken();
-        List<DailyMealDTO> dailyMealsDTO = etlClient.getDailyMeals(token);
+        List<DailyMealDTO> dailyMealsDTO = etlClient.getDailyMeals();
         if (dailyMealsDTO.isEmpty()) {
             throw new NoDailyMealsException("There isn't any daily meal to create the emails.");
         }
