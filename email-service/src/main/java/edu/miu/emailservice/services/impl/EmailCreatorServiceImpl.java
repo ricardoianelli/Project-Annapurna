@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailCreatorServiceImpl implements EmailCreatorService {
-    private final String FROM_EMAIL = "ricardoianelli11@gmail.com";
 
     public Email getEmail(UserResponseDTO user, String mailBody, String weekday, String date) {
         StringBuilder sb = new StringBuilder();
@@ -25,7 +24,9 @@ public class EmailCreatorServiceImpl implements EmailCreatorService {
                 .append(mailBody)
                 .append("<br><br><i>Please not that this information can be changed at anytime by the official meals provider!</i>");
 
-        return new Email(FROM_EMAIL, user.getEmail(), sb.toString());
+        String email_user = System.getenv("GMAIL_USER");
+
+        return new Email(email_user, user.getEmail(), sb.toString());
     }
 
     public String getBaseEmailBody(DailyMeal dailyMeal) {
