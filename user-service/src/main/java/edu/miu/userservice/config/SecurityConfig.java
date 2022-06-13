@@ -40,8 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers( "/api/v1/users/**/**").hasAnyAuthority("FACULTY");
-        http.authorizeRequests().antMatchers( "/api/v1/email/**").hasAnyAuthority("STUDENT");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/**").access("hasIpAddress('127.0.0.1/32')");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
+
 import static edu.miu.userservice.constant.WebResourceKeyConstant.API_V1;
 import static edu.miu.userservice.constant.WebResourceKeyConstant.UserConstants.*;
 import static org.springframework.http.ResponseEntity.ok;
@@ -25,12 +27,20 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsers() {
-        List<UserResponseDTO> users = userService.getAllUsers();
+    public ResponseEntity<?> getUsers(@RequestParam Map<String,String> requestParams) {
+
+        List<UserResponseDTO> users;
+
+        if (requestParams.containsKey("subscribed")) {
+            Boolean subscribed = Boolean.valueOf(requestParams.get("subscribed"));
+            users = userService.getUsersBySubscription(subscribed);
+        }
+        else {
+            users = userService.getAllUsers();
+        }
 
         if (users.size() > 0) {
-           return new ResponseEntity<>(users,
-                     HttpStatus.OK);
+            return new ResponseEntity<>(users, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -1,5 +1,7 @@
 package edu.miu.etlservice.service.impl;
 
+import edu.miu.etlservice.dto.DailyMealDTO;
+import edu.miu.etlservice.helpers.DailyMealMapper;
 import edu.miu.etlservice.model.DailyMeal;
 import edu.miu.etlservice.model.DineType;
 import edu.miu.etlservice.model.Meal;
@@ -8,12 +10,14 @@ import edu.miu.etlservice.repository.DailyMealRepository;
 import edu.miu.etlservice.repository.DineTypeRepository;
 import edu.miu.etlservice.repository.MealRepository;
 import edu.miu.etlservice.repository.WeekdayRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class EtlServiceImpl implements EtlService {
@@ -31,11 +35,17 @@ public class EtlServiceImpl implements EtlService {
 
     public void fetch() {
         populateDomainClasses(); //TODO: Remove it after we stop recreating DB
-        LocalDate today = LocalDate.of(2022, 6, 1);
+        LocalDate today = LocalDate.now();
         for (int i = 0; i < 10; i++) {
-            LocalDate currentDate = today.plusDays(1);
+            LocalDate currentDate = today.minusDays(i);
             getMockedDailyMeals(currentDate);
         }
+    }
+
+    public List<DailyMealDTO> getDailyMeals() {
+        LocalDate today = LocalDate.now();
+        List<DailyMeal> dailyMeals = dailyMealRepository.findDailyMealsByDate(today);
+        return dailyMeals.stream().map((meal) -> DailyMealMapper.toDTO(meal)).collect(Collectors.toList());
     }
 
     private void populateDomainClasses() {
