@@ -7,6 +7,7 @@ import edu.miu.emailservice.services.DailyMealFetchService;
 import edu.miu.emailservice.services.EmailCreatorService;
 import edu.miu.emailservice.services.EmailSenderService;
 import edu.miu.emailservice.services.SubscribersService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class EmailServicesFacadeImpl implements EmailServicesFacade {
 
     @Override
     @Scheduled(cron = "0 0 6 * * * ", zone = "America/Chicago")
+    @Async
     public void sendEmailToSubscribers() {
         List<UserResponseDTO> subscribers = subscribersService.getSubscribersList();
         DailyMeal dailyMeal = dailyMealFetchService.getDailyMeals();
