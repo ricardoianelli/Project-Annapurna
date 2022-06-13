@@ -9,19 +9,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailCreatorServiceImpl implements EmailCreatorService {
-    private final String FROM_EMAIL = "dinningsubscription@ricardoianelli.com";
+    private final String FROM_EMAIL = "ricardoianelli11@gmail.com";
 
     public Email getEmail(UserResponseDTO user, String mailBody, String weekday, String date) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Hi ")
+        sb.append("<h3>Hi ")
                 .append(user.getName())
-                .append("!\nHere's your menu for today (")
+                .append("!")
+                .append("\uD83C\uDF7D")
+                .append("</h3><br><strong><u>Here's your menu for today (")
                 .append(weekday)
                 .append(", ")
                 .append(date)
-                .append("):")
+                .append("):</u></strong>")
                 .append(mailBody)
-                .append("\n\nPlease not that this information can be changed at anytime by the official meals provider!");
+                .append("<br><br><i>Please not that this information can be changed at anytime by the official meals provider!</i>");
 
         return new Email(FROM_EMAIL, user.getEmail(), sb.toString());
     }
@@ -30,9 +32,9 @@ public class EmailCreatorServiceImpl implements EmailCreatorService {
         StringBuilder sb = new StringBuilder();
 
         for (DineMeals dineMeals : dailyMeal.getDayDines()) {
-            sb.append("\n\n").append(dineMeals.getDineType());
+            sb.append("<br><br><b>").append(dineMeals.getDineType()).append("</b>");
             for (String mealName : dineMeals.getMealNames()) {
-                sb.append("\n- ").append(mealName);
+                sb.append("<br>- ").append(mealName);
             }
         }
 
