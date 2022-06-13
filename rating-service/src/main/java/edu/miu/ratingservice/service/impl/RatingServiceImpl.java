@@ -36,11 +36,11 @@ public class RatingServiceImpl implements RatingService {
         Rating rating = ratingRepository.findById(id).get();
         rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
         rating.setId(id);
-        rating.setDailyMeal(ratingRequestDTO.getDailyMeal());
-        rating.setUser(ratingRequestDTO.getUser());
+        rating.setDailyMeal(ratingRequestDTO.getDailyMealId());
+        rating.setUser(ratingRequestDTO.getUserId());
         rating.setRating(ratingRequestDTO.getRating());
         ratingRepository.save(rating);
-        return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO, id);
+        return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO);
     }
 
     @Override

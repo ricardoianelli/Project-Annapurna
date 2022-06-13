@@ -8,7 +8,7 @@ import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.model.Rating;
 
 public class RatingUtils {
-    public static List<RatingResponseDTO> parseRatingToRatingResponseDTO(List<Rating> ratings) {
+    public static List<RatingResponseDTO> parseRatingListToRatingResponseDTOList(List<Rating> ratings) {
         List<RatingResponseDTO> ratingResponseDTOList = new ArrayList<>();
         for (Rating rating : ratings) {
             ratingResponseDTOList.add(parseRatingToRatingResponseDTOObject(rating));
@@ -18,25 +18,24 @@ public class RatingUtils {
 
     public static Rating parseRatingRequestDTOToRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = new Rating();
-        rating.setDailyMeal(ratingRequestDTO.getDailyMeal());
-        rating.setUser(ratingRequestDTO.getUser());
+        rating.setDailyMeal(ratingRequestDTO.getDailyMealId());
+        rating.setUser(ratingRequestDTO.getUserId());
         rating.setRating(ratingRequestDTO.getRating());
         return rating;
     }
 
-    public static RatingResponseDTO parseRatingRequestDTOToRatingResponseDTO(RatingRequestDTO ratingRequestDTO,
-            Long id) {
+    public static RatingResponseDTO parseRatingRequestDTOToRatingResponseDTO(RatingRequestDTO ratingRequestDTO) {
         RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
-        ratingResponseDTO.setUser(ratingRequestDTO.getUser());
-        ratingResponseDTO.setDailyMeal(ratingRequestDTO.getDailyMeal());
+        ratingResponseDTO.setUserId(ratingRequestDTO.getUserId());
+        ratingResponseDTO.setDailyMealId(ratingRequestDTO.getDailyMealId());
         ratingResponseDTO.setRating(ratingRequestDTO.getRating());
         return ratingResponseDTO;
     }
 
-    public static RatingResponseDTO parseRatingToRatingReponseDTOObject(Rating rating) {
+    public static RatingResponseDTO parseRatingToRatingResponseDTOObject(Rating rating) {
         RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
-        ratingResponseDTO.setDailyMeal(rating.getDailyMeal());
-        ratingResponseDTO.setUser(rating.getUser());
+        ratingResponseDTO.setDailyMealId(rating.getDailyMeal());
+        ratingResponseDTO.setUserId(rating.getUser());
         ratingResponseDTO.setRating(rating.getRating());
         return ratingResponseDTO;
     }
