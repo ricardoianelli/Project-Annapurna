@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.net.InetAddress;
+
 import static org.springframework.http.HttpMethod.GET;
 
 /**
@@ -36,13 +38,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String localIp = InetAddress.getLocalHost().getHostAddress() + "/24";
+        String matcherString = "hasIpAddress('" + localIp + "') or hasIpAddress('127.0.0.1')";
+
         http.csrf().disable();
         http.httpBasic().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/login/**", "/api/v1/token/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/api/v1/users/**/**").hasAnyAuthority("FACULTY");
-        http.authorizeRequests().antMatchers(GET, "/api/v1/email/**").hasAnyAuthority("STUDENT");
+        http.authorizeRequests().antMatchers(GET, "/api/v1/users").access(matcherString);
+        http.authorizeRequests().antMatchers(GET, "/api/v1/users/**").access(matcherString);
         http.authorizeRequests().anyRequest().authenticated();
+
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

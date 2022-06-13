@@ -14,10 +14,10 @@ public class Weekday implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
-    private String weekday;
+    private String name;
 
-    public Weekday(String weekday) {
-        this.weekday = weekday;
+    public Weekday(String name) {
+        this.name = name;
     }
 
     public Weekday() {
