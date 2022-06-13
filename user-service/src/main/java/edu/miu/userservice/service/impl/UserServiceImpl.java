@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
         //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
-        User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        User user = UserUtils.parseUserRequestDTOToUser(new User(), userRequestDTO);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
         return parseUserToUserResponseDTO(user);
@@ -80,23 +80,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
         User user = userRepository.findById(id).get();
-        user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        user = UserUtils.parseUserRequestDTOToUser(user, userRequestDTO);
         user.setId(id);
-        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        if(userRequestDTO.getPassword()!= null || !userRequestDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        };
         userRepository.save(user);
-        return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO, id);
+        return parseUserToUserResponseDTO(user);
     }
 
     @Override
-    public String deleteUser(Long id) {
-        try {
-            User user = userRepository.findById(id).get();
-            userRepository.delete(user);
-            return "User Deleted Successfully!";
-        } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException();
-        }
+    public void deleteUser(Long id) throws Exception{
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("Throw Some Good Exception Here."));
+        userRepository.delete(user);
     }
+
 
     @Override
     public List<UserResponseDTO> getUsersBySubscription(boolean subscribed) {
@@ -118,7 +117,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUserRole(UserRoleRequestDTO userRoleRequestDTO) {
-        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        //TODO:
+        // EXCEPTION CAN BE HANDLED ON BOTH CASES BECAUSE WE CANNOT ASSIGN
+        // ROLES THAT'S NOT DEFINED DURING STARTUP
         User user = userRepository.findByUsername(userRoleRequestDTO.getUsername());
         Role role = roleRepository.findByName(userRoleRequestDTO.getRoleName());
         user.getRoles().add(role);

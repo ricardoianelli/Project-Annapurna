@@ -22,14 +22,14 @@ public class UserUtils {
             userResponseDTO.setUsername(user.getUsername());
             userResponseDTO.setPassword(user.getPassword());
             userResponseDTO.setSubscribed(user.getSubscribed());
+            userResponseDTO.setRoles(user.getRoles());
             userResponseDTOList.add(userResponseDTO);
         }
         return userResponseDTOList;
     }
 
     //TODO: THIS NEEDS TO BE REFACTORED
-    public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
-        User user = new User();
+    public static User parseUserRequestDTOToUser(User user, UserRequestDTO userRequestDTO){
         user.setName(userRequestDTO.getName());
         user.setUsername(userRequestDTO.getUsername());
         user.setEmail(userRequestDTO.getEmail());
@@ -50,9 +50,11 @@ public class UserUtils {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setName(user.getName());
+        userResponseDTO.setUsername(user.getUsername());
+        userResponseDTO.setPassword(user.getPassword());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setSubscribed(user.getSubscribed());
-
+        userResponseDTO.setRoles(user.getRoles());
         return userResponseDTO;
     }
 
@@ -65,20 +67,20 @@ public class UserUtils {
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setSubscribed(user.getSubscribed());
         userResponseDTO.setRoles(user.getRoles());
-
         return userResponseDTO;
     }
 
     public static Function<User, UserResponseFeignDTO> convertToUserResponseFeignDTO = user -> {
-        UserResponseFeignDTO responseDTO = new UserResponseFeignDTO();
+        UserResponseFeignDTO userResponseFeignDTO = new UserResponseFeignDTO();
 
-        responseDTO.setId(user.getId());
-        responseDTO.setPassword(user.getPassword());
-        responseDTO.setUsername(user.getUsername());
-        responseDTO.setEmail(user.getEmail());
-        responseDTO.setName(user.getName());
-        responseDTO.setSubscribed(user.getSubscribed());
+        userResponseFeignDTO.setId(user.getId());
+        userResponseFeignDTO.setPassword(user.getPassword());
+        userResponseFeignDTO.setUsername(user.getUsername());
+        userResponseFeignDTO.setEmail(user.getEmail());
+        userResponseFeignDTO.setName(user.getName());
+        userResponseFeignDTO.setSubscribed(user.getSubscribed());
+        userResponseFeignDTO.setRoles(user.getRoles());
 
-        return responseDTO;
+        return userResponseFeignDTO;
     };
 }

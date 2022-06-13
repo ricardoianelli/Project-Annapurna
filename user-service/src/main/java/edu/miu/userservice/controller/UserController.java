@@ -68,8 +68,9 @@ public class UserController {
     }
 
     @DeleteMapping(USER_ID)
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) throws Exception {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = SEARCH)

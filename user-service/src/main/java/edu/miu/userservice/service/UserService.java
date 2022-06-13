@@ -20,7 +20,7 @@ public interface UserService {
 
     UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id);
 
-    String deleteUser(Long id);
+    void deleteUser(Long id) throws Exception;
 
     UserResponseFeignDTO searchUser(UserRequestFeignDTO requestDTO);
 

@@ -43,8 +43,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         @SuppressWarnings("deprecation")
         ApiInfo apiInfo = new ApiInfo(
-                "Email REST API",
-                "All Email related information",
+                "User Service REST API",
+                "All User and Roles related information",
                 "API",
                 "Terms of services",
                 "group5@miu.edu",
