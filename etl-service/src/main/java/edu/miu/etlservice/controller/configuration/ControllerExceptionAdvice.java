@@ -1,6 +1,6 @@
 package edu.miu.etlservice.controller.configuration;
 
-import edu.miu.etlservice.exceptions.DailyMealNotFound;
+import edu.miu.etlservice.exceptions.DailyMealNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,8 +11,8 @@ import java.time.Instant;
 
 @ControllerAdvice
 public class ControllerExceptionAdvice {
-    @ExceptionHandler(DailyMealNotFound.class)
-    public ResponseEntity<StandardError> noMealInformationFound(DailyMealNotFound ex, HttpServletRequest request) {
+    @ExceptionHandler(DailyMealNotFoundException.class)
+    public ResponseEntity<StandardError> noMealInformationFound(DailyMealNotFoundException ex, HttpServletRequest request) {
         String errorMsg = "Daily Meal not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         return getResponseError(errorMsg, status, request);

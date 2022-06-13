@@ -1,6 +1,7 @@
 package edu.miu.etlservice.service.impl;
 
 import edu.miu.etlservice.dto.DailyMealDTO;
+import edu.miu.etlservice.exceptions.DailyMealNotFoundException;
 import edu.miu.etlservice.helpers.DailyMealMapper;
 import edu.miu.etlservice.model.DailyMeal;
 import edu.miu.etlservice.model.DineType;
@@ -10,7 +11,6 @@ import edu.miu.etlservice.repository.DailyMealRepository;
 import edu.miu.etlservice.repository.DineTypeRepository;
 import edu.miu.etlservice.repository.MealRepository;
 import edu.miu.etlservice.repository.WeekdayRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -46,6 +46,14 @@ public class EtlServiceImpl implements EtlService {
         LocalDate today = LocalDate.now();
         List<DailyMeal> dailyMeals = dailyMealRepository.findDailyMealsByDate(today);
         return dailyMeals.stream().map((meal) -> DailyMealMapper.toDTO(meal)).collect(Collectors.toList());
+    }
+
+    @Override
+    public DailyMealDTO getDailyMealById(Long id) {
+        DailyMeal dailyMeal = dailyMealRepository.findDailyMealById(id);
+        if (dailyMeal == null) throw new DailyMealNotFoundException();
+
+        return DailyMealMapper.toDTO(dailyMeal);
     }
 
     private void populateDomainClasses() {

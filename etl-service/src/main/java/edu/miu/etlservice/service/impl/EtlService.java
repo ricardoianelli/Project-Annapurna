@@ -8,4 +8,6 @@ public interface EtlService {
     void fetch();
 
     List<DailyMealDTO> getDailyMeals();
+
+    DailyMealDTO getDailyMealById(Long id);
 }
