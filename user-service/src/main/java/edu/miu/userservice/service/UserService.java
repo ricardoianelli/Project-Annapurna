@@ -5,8 +5,6 @@ import edu.miu.userservice.dto.request.UserRequestFeignDTO;
 import edu.miu.userservice.dto.request.UserRoleRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
-import edu.miu.userservice.model.Role;
-import edu.miu.userservice.model.User;
 
 import java.util.List;
 

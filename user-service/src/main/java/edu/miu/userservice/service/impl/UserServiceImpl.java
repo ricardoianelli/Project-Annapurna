@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static edu.miu.userservice.utils.UserUtils.convertToUserResponseFeignDTO;
 
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseFeignDTO getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findByUsername(username);
         if (user != null) {
             return UserUtils.parseUserToUserResponseFeignDTO(user);
         } else {
@@ -71,10 +70,10 @@ public class UserServiceImpl implements UserService {
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
-        if(user!= null){
+        if (user != null) {
             //TODO: CHANGE RETURN TYPE TO VOID
             return "User Created Successfully!";
-        } else{
+        } else {
             return "Sorry, something went wrong";
         }
     }
@@ -112,25 +111,25 @@ public class UserServiceImpl implements UserService {
         if (userRequestFeignDTO.getEmailAddress() != null) {
             user = userRepository.findByEmail(userRequestFeignDTO.getEmailAddress()).get();
         } else {
-            user = userRepository.findByUsername(userRequestFeignDTO.getUsername()).get();
+            user = userRepository.findByUsername(userRequestFeignDTO.getUsername());
         }
         //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
         return convertToUserResponseFeignDTO.apply(user);
     }
 
     @Override
-    public void addUserRole(UserRoleRequestDTO userRoleRequestDTO){
+    public void addUserRole(UserRoleRequestDTO userRoleRequestDTO) {
         //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
         User user = userRepository.findByUsername(userRoleRequestDTO.getUsername());
-        Role role  = roleRepository.findByName(userRoleRequestDTO.getRoleName());
+        Role role = roleRepository.findByName(userRoleRequestDTO.getRoleName());
         user.getRoles().add(role);
     }
 
     @Override
-    public void removeUserRole(String username, Long roleId){
+    public void removeUserRole(String username, Long roleId) {
         //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
         User user = userRepository.findByUsername(username);
-        Role role  = roleRepository.findById(roleId).get();
+        Role role = roleRepository.findById(roleId).get();
         user.getRoles().remove(role);
     }
 
