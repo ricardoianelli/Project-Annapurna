@@ -10,5 +10,5 @@ public interface RatingService {
 
     RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id);
 
-    String deleteRating(Long id);
+    RatingResponseDTO deleteRating(Long id);
 }

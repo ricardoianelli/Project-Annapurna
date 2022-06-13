@@ -44,9 +44,9 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public String deleteRating(Long id) {
+    public RatingResponseDTO deleteRating(Long id) {
         Rating rating = ratingRepository.findById(id).get();
         ratingRepository.delete(rating);
-        return "Rating Deleted";
+        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
     }
 }

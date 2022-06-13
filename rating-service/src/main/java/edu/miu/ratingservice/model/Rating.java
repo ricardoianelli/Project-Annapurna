@@ -11,8 +11,8 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private String dailyMeal;
-    private String user;
+    private String dailyMealId;
+    private String userId;
 
     private Double rating;
 
@@ -20,8 +20,8 @@ public class Rating implements Serializable {
     }
 
     public Rating(String dailyMeal, String user, Double rating) {
-        this.dailyMeal = dailyMeal;
-        this.user = user;
+        this.dailyMealId = dailyMeal;
+        this.userId = user;
         this.rating = rating;
     }
 
