@@ -10,4 +10,9 @@ public class WebResourceKeyConstant {
         String FETCH_USER_BY_USERNAME = "/username/{username}";
         String SEARCH = "/search";
     }
+
+    public interface RoleConstants {
+        String ROLE_BASE = "/roles";
+        String ROLE_ID = "/{id}";
+    }
 }

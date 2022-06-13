@@ -2,6 +2,7 @@ package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.UserRequestDTO;
 import edu.miu.userservice.dto.request.UserRequestFeignDTO;
+import edu.miu.userservice.dto.request.UserRoleRequestDTO;
 import edu.miu.userservice.dto.response.UserResponseDTO;
 import edu.miu.userservice.dto.response.UserResponseFeignDTO;
 import edu.miu.userservice.exception.UserNotFoundException;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseFeignDTO getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username).get();
+        User user = userRepository.findByUsername(username);
         if(user != null){
             return UserUtils.parseUserToUserResponseFeignDTO(user);
         }else{
@@ -70,16 +70,6 @@ public class UserServiceImpl implements UserService {
     public String addUser(UserRequestDTO userRequestDTO) {
         //TODO: CHECK IF USER EXIST BY USERNAME, IF YES -> THROW ERROR
         User user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-        List<Role> finalRoles = new ArrayList<>();
-        user.getRoles().forEach(role->{
-            Optional<Role> role1 = roleRepository.findByName(role.getName());
-            if( role1.get()!= null){
-                finalRoles.add(role1.get());
-            }else{
-                finalRoles.add(role);
-            }
-        });
-        roleRepository.saveAll(user.getRoles());
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user = userRepository.save(user);
         if(user!= null){
@@ -93,15 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id) {
         User user = userRepository.findById(id).get();
-        if(user != null){
-            user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
-            user.setId(id);
-            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-            userRepository.save(user);
-        }else{
-            //TODO: NEED TO DO EXCEPTION HANDLING
-            return new UserResponseDTO();
-        }
+        user = UserUtils.parseUserRequestDTOToUser(userRequestDTO);
+        user.setId(id);
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        userRepository.save(user);
         return UserUtils.parseUserRequestDTOToUserResponseDTO(userRequestDTO, id);
     }
 
@@ -122,10 +107,26 @@ public class UserServiceImpl implements UserService {
         if(userRequestFeignDTO.getEmailAddress()!= null){
             user = userRepository.findByEmail(userRequestFeignDTO.getEmailAddress()).get();
         }else {
-            user = userRepository.findByUsername(userRequestFeignDTO.getUsername()).get();
+            user = userRepository.findByUsername(userRequestFeignDTO.getUsername());
         }
         //TODO:EXCEPTION NEEDS TO BE HANDLED HERE
         return convertToUserResponseFeignDTO.apply(user);
+    }
+
+    @Override
+    public void addUserRole(UserRoleRequestDTO userRoleRequestDTO){
+        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        User user = userRepository.findByUsername(userRoleRequestDTO.getUsername());
+        Role role  = roleRepository.findByName(userRoleRequestDTO.getRoleName());
+        user.getRoles().add(role);
+    }
+
+    @Override
+    public void removeUserRole(String username, Long roleId){
+        //TODO: EXCEPTION CAN BE HANDLED ON BOTH CASES
+        User user = userRepository.findByUsername(username);
+        Role role  = roleRepository.findById(roleId).get();
+        user.getRoles().remove(role);
     }
 
 
