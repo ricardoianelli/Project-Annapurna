@@ -1,6 +1,7 @@
 package edu.miu.userservice.service.impl;
 
 import edu.miu.userservice.dto.request.RoleRequestDTO;
+import edu.miu.userservice.dto.request.RoleRequestUpdateDTO;
 import edu.miu.userservice.dto.response.RoleResponseDTO;
 import edu.miu.userservice.model.Role;
 import edu.miu.userservice.repository.RoleRepository;
@@ -44,11 +45,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleResponseDTO updateRole(Long id, RoleRequestDTO roleRequestDTO) throws Exception {
-        Role roleRequest = modelMapper.map(roleRequestDTO, Role.class);
+    public RoleResponseDTO updateRole(Long id, RoleRequestUpdateDTO roleRequestUpdateDTO) throws Exception {
+        Role roleRequest = modelMapper.map(roleRequestUpdateDTO, Role.class);
         Role role = roleRepository.findById(id)
                 .orElseThrow(()-> new Exception("Throw Custom Exception here!"));
-        role.setName(roleRequestDTO.getName());
+        role.setName(roleRequestUpdateDTO.getName());
+        role.setStatus(roleRequestUpdateDTO.isStatus());
         roleRepository.save(role);
         //REMOVE THIS WHEN ETH IS WORKING FINE
         RoleResponseDTO roleResponse = modelMapper.map(role, RoleResponseDTO.class);

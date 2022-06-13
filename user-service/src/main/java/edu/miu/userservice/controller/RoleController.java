@@ -1,6 +1,7 @@
 package edu.miu.userservice.controller;
 
 import edu.miu.userservice.dto.request.RoleRequestDTO;
+import edu.miu.userservice.dto.request.RoleRequestUpdateDTO;
 import edu.miu.userservice.dto.response.ApiResponse;
 import edu.miu.userservice.dto.response.RoleResponseDTO;
 import edu.miu.userservice.model.Role;
@@ -55,8 +56,8 @@ public class RoleController {
     }
 
     @PutMapping(ROLE_ID)
-    public ResponseEntity<?> updateRole(@PathVariable Long id, @RequestBody RoleRequestDTO roleRequestDTO) throws Exception {
-        RoleResponseDTO roleResponse = roleService.updateRole(id, roleRequestDTO);
+    public ResponseEntity<?> updateRole(@PathVariable Long id, @RequestBody RoleRequestUpdateDTO roleRequestUpdateDTO) throws Exception {
+        RoleResponseDTO roleResponse = roleService.updateRole(id, roleRequestUpdateDTO);
         return ResponseEntity.ok().body(roleResponse);
     }
 
