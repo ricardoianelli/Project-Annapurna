@@ -28,6 +28,15 @@ public class RatingUtils {
         return rating;
     }
 
+    public static RatingResponseDTO parseRatingRequestDTOToRatingResponseDTO(RatingRequestDTO ratingRequestDTO,
+            Long id) {
+        RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
+        ratingResponseDTO.setUser(ratingRequestDTO.getUser());
+        ratingResponseDTO.setDailyMeal(ratingRequestDTO.getDailyMeal());
+        ratingResponseDTO.setRating(ratingRequestDTO.getRating());
+        return ratingResponseDTO;
+    }
+
     public static RatingResponseDTO parseRatingToRatingReponseDTOObject(Rating rating) {
         RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
         ratingResponseDTO.setDailyMeal(rating.getDailyMeal());

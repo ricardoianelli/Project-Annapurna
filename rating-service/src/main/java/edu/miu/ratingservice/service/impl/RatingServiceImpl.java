@@ -9,54 +9,36 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.model.Rating;
-import edu.miu.ratingservice.repository.DailyMealRepository;
-import edu.miu.ratingservice.repository.DineTypeRepository;
-import edu.miu.ratingservice.repository.MealRepository;
 import edu.miu.ratingservice.repository.RatingRepository;
-import edu.miu.ratingservice.repository.UserRepository;
-import edu.miu.ratingservice.repository.WeekdaysRepository;
 import edu.miu.ratingservice.service.RatingService;
 import edu.miu.ratingservice.utils.RatingUtils;
 
 @Service
 @Transactional
 public class RatingServiceImpl implements RatingService {
-
-    private final DailyMealRepository dailyMealRepository;
-    private final DineTypeRepository dineTypeRepository;
-    private final MealRepository mealRepository;
     private final RatingRepository ratingRepository;
-    private final UserRepository userRepository;
-    private final WeekdaysRepository weekdaysRepository;
 
-    public RatingServiceImpl(DailyMealRepository dailyMealRepository, DineTypeRepository dineTypeRepository,
-            MealRepository mealRepository, RatingRepository ratingRepository, UserRepository userRepository,
-            WeekdaysRepository weekdaysRepository) {
-        this.dailyMealRepository = dailyMealRepository;
-        this.dineTypeRepository = dineTypeRepository;
-        this.mealRepository = mealRepository;
+    public RatingServiceImpl(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
-        this.userRepository = userRepository;
-        this.weekdaysRepository = weekdaysRepository;
     }
 
-    @Override
-    public List<RatingResponseDTO> getRatingsByMeal(Long id) {
+    // @Override
+    // public List<RatingResponseDTO> getRatingsByMeal(Long id) {
 
-        return null;
-    }
+    // return null;
+    // }
 
-    @Override
-    public List<RatingResponseDTO> getRatingsByDay() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public List<RatingResponseDTO> getRatingsByDay() {
+    // return null;
+    // }
 
-    @Override
-    public List<RatingResponseDTO> getRatingsByUser(Long id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public List<RatingResponseDTO> getRatingsByUser(Long id) {
+    // Rating rating = ratingRepository.findByUser(id).get();
+    // return (List<RatingResponseDTO>)
+    // RatingUtils.parseRatingToRatingReponseDTOObject(rating);
+    // }
 
     @Override
     public RatingResponseDTO getRatingById(Long id) {
@@ -65,26 +47,28 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public RatingRequestDTO addRating(RatingRequestDTO ratingRequestDTO) {
+    public String addRating(RatingRequestDTO ratingRequestDTO) {
         Rating rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
         rating = ratingRepository.save(rating);
+        return "Rating Added";
     }
 
     @Override
-    public RatingResponseDTO updateRating(RatingResponseDTO ratingResponseDTO, Long id) {
-        // TODO Auto-generated method stub
-        return null;
+    public RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id) {
+        Rating rating = ratingRepository.findById(id).get();
+        rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
+        rating.setId(id);
+        rating.setDailyMeal(ratingRequestDTO.getDailyMeal());
+        rating.setUser(ratingRequestDTO.getUser());
+        rating.setRating(ratingRequestDTO.getRating());
+        ratingRepository.save(rating);
+        return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO, id);
     }
 
     @Override
-    public RatingResponseDTO addRating(RatingResponseDTO ratingResponseDTO) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void deleteRating(Long id) {
-        // TODO Auto-generated method stub
-
+    public String deleteRating(Long id) {
+        Rating rating = ratingRepository.findById(id).get();
+        ratingRepository.delete(rating);
+        return "Rating Deleted";
     }
 }

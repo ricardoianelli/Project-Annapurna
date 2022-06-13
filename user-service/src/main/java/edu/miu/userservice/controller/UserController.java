@@ -27,8 +27,8 @@ public class UserController {
         List<UserResponseDTO> users = userService.getAllUsers();
 
         if (users.size() > 0) {
-           return new ResponseEntity<>(users,
-                     HttpStatus.OK);
+            return new ResponseEntity<>(users,
+                    HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

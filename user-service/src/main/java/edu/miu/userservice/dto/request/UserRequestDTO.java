@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-
 @Data
 public class UserRequestDTO implements Serializable {
     private String name;

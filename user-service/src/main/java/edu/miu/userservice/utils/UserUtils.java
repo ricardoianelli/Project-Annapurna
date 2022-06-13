@@ -14,16 +14,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-
 public class UserUtils {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public static List<UserResponseDTO> parseUserToUserResponseDTO(List<User> users){
+    public static List<UserResponseDTO> parseUserToUserResponseDTO(List<User> users) {
         List<UserResponseDTO> userResponseDTOList = new ArrayList<>();
-        for (User user :
-                users) {
+        for (User user : users) {
             UserResponseDTO userResponseDTO = new UserResponseDTO();
             userResponseDTO.setId(user.getId());
             userResponseDTO.setName(user.getName());
@@ -34,8 +32,8 @@ public class UserUtils {
         return userResponseDTOList;
     }
 
-    //TODO: THIS NEEDS TO BE REFACTORED
-    public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO){
+    // TODO: THIS NEEDS TO BE REFACTORED
+    public static User parseUserRequestDTOToUser(UserRequestDTO userRequestDTO) {
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setUsername(userRequestDTO.getUsername());
@@ -44,7 +42,7 @@ public class UserUtils {
         return user;
     }
 
-    public static UserResponseDTO parseUserRequestDTOToUserResponseDTO(UserRequestDTO userRequestDTO, Long id){
+    public static UserResponseDTO parseUserRequestDTOToUserResponseDTO(UserRequestDTO userRequestDTO, Long id) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(id);
         userResponseDTO.setName(userRequestDTO.getName());
@@ -53,7 +51,7 @@ public class UserUtils {
         return userResponseDTO;
     }
 
-    public static UserResponseDTO parseUserToUserResponseDTO(User user){
+    public static UserResponseDTO parseUserToUserResponseDTO(User user) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setName(user.getName());
@@ -63,7 +61,7 @@ public class UserUtils {
         return userResponseDTO;
     }
 
-    public static UserResponseFeignDTO parseUserToUserResponseFeignDTO(User user){
+    public static UserResponseFeignDTO parseUserToUserResponseFeignDTO(User user) {
         UserResponseFeignDTO userResponseDTO = new UserResponseFeignDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setUsername(user.getUsername());
