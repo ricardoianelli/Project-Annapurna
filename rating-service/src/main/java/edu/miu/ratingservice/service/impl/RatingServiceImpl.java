@@ -1,9 +1,7 @@
 package edu.miu.ratingservice.service.impl;
 
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
-import edu.miu.ratingservice.dto.response.DailyMealResponseDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
-import edu.miu.ratingservice.dto.response.UserResponseDTO;
 import edu.miu.ratingservice.exception.MealNotFoundException;
 import edu.miu.ratingservice.exception.RatingNotFound;
 import edu.miu.ratingservice.exception.UserNotFoundException;
@@ -14,12 +12,9 @@ import edu.miu.ratingservice.repository.RatingRepository;
 import edu.miu.ratingservice.service.RatingService;
 import edu.miu.ratingservice.utils.RatingUtils;
 import feign.FeignException;
-import feign.FeignException.FeignClientException;
-import feign.FeignException.NotFound;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,12 +35,22 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<Rating> getRatingByDailyMealId(Long id) {
-        return ratingRepository.findByDailyMealId(id);
+        List<Rating> rating = ratingRepository.findByDailyMealId(id);
+        if (rating.size() != 0) {
+            return rating;
+        } else {
+            throw new MealNotFoundException();
+        }
     }
 
     @Override
     public List<Rating> getRatingByUserId(Long id) {
-        return ratingRepository.findByUserId(id);
+        List<Rating> rating = ratingRepository.findByUserId(id);
+        if (rating.size() != 0) {
+            return rating;
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
     @Override

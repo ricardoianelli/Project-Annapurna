@@ -1,7 +1,6 @@
 package edu.miu.ratingservice.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;

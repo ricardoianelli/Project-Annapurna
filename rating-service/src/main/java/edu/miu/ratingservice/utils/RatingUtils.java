@@ -39,5 +39,4 @@ public class RatingUtils {
         ratingResponseDTO.setRating(rating.getRating());
         return ratingResponseDTO;
     }
-
 }
