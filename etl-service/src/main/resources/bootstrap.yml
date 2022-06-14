@@ -5,3 +5,6 @@ spring:
     config:
       uri:
         - http://localhost:8000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
