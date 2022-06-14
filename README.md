@@ -1,15 +1,16 @@
 # cs544-project
-This is a Project Repository for a course CS544-Enterprise Architecture taught by [Professor Michael Zijlstra](https://manalabs.org/).
+This is a Project Repository for a course CS544-Enterprise Architecture
+taught by [Professor Michael Zijlstra](https://manalabs.org/).🧑🏽‍🏫 at MIU 🏫
 
 # Swagger URLs
 
-1. USER-SERVICE
+1. ### USER-SERVICE
    - http://localhost:8082/swagger-ui.html#/
 
-2. LOGIN-SERVICE
+2. ### LOGIN-SERVICE
    - http://localhost:9090/swagger-ui.html#/
 
-3. EMAIL-SERVICE
+3. ### EMAIL-SERVICE
    - http://localhost:8081/swagger-ui.html#/
 
 
@@ -25,7 +26,7 @@ This is a Project Repository for a course CS544-Enterprise Architecture taught b
 9. **Rating-Service:** *8084*
 
 # Contributors
-- Ricardo Macedo Ianelli
-- Riwaz Bahadur Sijapati
-- Bijay Shrestha
+- ## Ricardo Macedo Ianelli 🇧🇷
+- ## Riwaaz Bahadur Sijapati🇳🇵
+- ## Bijay Shrestha🇳🇵
 
