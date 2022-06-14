@@ -1,6 +1,7 @@
 package edu.miu.userservice.model;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
@@ -49,5 +50,13 @@ public class User implements Serializable {
         this.email = email;
         this.subscribed = subscribed;
         this.roles = roles;
+    }
+
+    public User(String username, String password, String name, String email, Boolean subscribed) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.subscribed = subscribed;
     }
 }

@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String localIp = InetAddress.getLocalHost().getHostAddress() + "/24";
-        String matcherString = "hasIpAddress('" + localIp + "') or hasIpAddress('127.0.0.1')";
+        String matcherString = "hasIpAddress('" + localIp + "') or hasIpAddress('127.0.0.1') or hasIpAddress('::1') or isAuthenticated()";
 
         http.csrf().disable();
         http.httpBasic().disable();

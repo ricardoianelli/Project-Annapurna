@@ -18,7 +18,6 @@ public class UserResponseDTO implements Serializable {
     private String name;
     private String email;
     private String username;
-    private String password;
     private Boolean subscribed;
     private Collection<Role> roles = new ArrayList<>();
 }

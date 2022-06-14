@@ -11,11 +11,18 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    private Long dailyMealId;
+    private Long userId;
 
-    @ManyToOne
-    private DailyMeal dailyMeal;
+    private Double rating;
 
-    @ManyToOne
-    private User user;
+    public Rating() {
+    }
+
+    public Rating(Long dailyMealId, Long userId, Double rating) {
+        this.dailyMealId = dailyMealId;
+        this.userId = userId;
+        this.rating = rating;
+    }
 
 }

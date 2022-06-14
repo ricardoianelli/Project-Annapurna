@@ -1,4 +1,4 @@
-package edu.miu.userservice.exception;
+package edu.miu.ratingservice.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
