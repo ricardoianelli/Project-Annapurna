@@ -11,6 +11,7 @@ import edu.miu.etlservice.repository.DailyMealRepository;
 import edu.miu.etlservice.repository.DineTypeRepository;
 import edu.miu.etlservice.repository.MealRepository;
 import edu.miu.etlservice.repository.WeekdayRepository;
+import edu.miu.etlservice.service.EtlService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,6 +35,8 @@ public class EtlServiceImpl implements EtlService {
     }
 
     public void fetch() {
+        if (mealRepository.existsById((short)1)) return;
+
         populateDomainClasses(); //TODO: Remove it after we stop recreating DB
         LocalDate today = LocalDate.now();
         for (int i = 0; i < 10; i++) {
@@ -117,9 +120,13 @@ public class EtlServiceImpl implements EtlService {
         DineType dineType = dineTypeRepository.getDineTypeByName(dineTypeName);
         List<DailyMeal> dailyMeals = new ArrayList<>();
 
+        final long lastMealId = mealRepository.count();
+        Random random = new Random();
+
         for (int i = 0; i < mealsCount; i++) {
-            Meal meal = mealRepository.getMealByName("Pizza");
-            Weekday weekday = weekdayRepository.getReferenceById(weekDay);
+            short currentMealId = (short) Math.max(1, random.nextInt((int) lastMealId));
+            Meal meal = mealRepository.findById(currentMealId).get();
+            Weekday weekday = weekdayRepository.findById(weekDay).get();
             DailyMeal dailyMeal = new DailyMeal(meal, weekday, dineType, date);
             dailyMeals.add(dailyMeal);
         }

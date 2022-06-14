@@ -1,7 +1,7 @@
 package edu.miu.etlservice.controller;
 
 import edu.miu.etlservice.dto.DailyMealDTO;
-import edu.miu.etlservice.service.impl.EtlService;
+import edu.miu.etlservice.service.EtlService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
