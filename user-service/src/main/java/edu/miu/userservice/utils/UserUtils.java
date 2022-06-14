@@ -20,7 +20,6 @@ public class UserUtils {
             userResponseDTO.setName(user.getName());
             userResponseDTO.setEmail(user.getEmail());
             userResponseDTO.setUsername(user.getUsername());
-            userResponseDTO.setPassword(user.getPassword());
             userResponseDTO.setSubscribed(user.getSubscribed());
             userResponseDTO.setRoles(user.getRoles());
             userResponseDTOList.add(userResponseDTO);
@@ -51,7 +50,6 @@ public class UserUtils {
         userResponseDTO.setId(user.getId());
         userResponseDTO.setName(user.getName());
         userResponseDTO.setUsername(user.getUsername());
-        userResponseDTO.setPassword(user.getPassword());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setSubscribed(user.getSubscribed());
         userResponseDTO.setRoles(user.getRoles());
@@ -62,7 +60,6 @@ public class UserUtils {
         UserResponseFeignDTO userResponseDTO = new UserResponseFeignDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setUsername(user.getUsername());
-        userResponseDTO.setPassword(user.getPassword());
         userResponseDTO.setName(user.getName());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setSubscribed(user.getSubscribed());
