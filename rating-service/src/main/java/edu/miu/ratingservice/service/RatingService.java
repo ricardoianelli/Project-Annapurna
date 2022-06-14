@@ -1,17 +1,13 @@
 package edu.miu.ratingservice.service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.model.Rating;
 
 public interface RatingService {
-    // List<Rating> getRatingByDailyMealId(Long id)
-
-    List<Object> getRatingByDailyMealId(Long id);
+    List<Rating> getRatingByDailyMealId(Long id);
 
     List<Rating> getRatingByUserId(Long id);
 

@@ -24,7 +24,7 @@ import java.util.Set;
 public class SwaggerConfig {
 
     @Bean
-    public Docket productApi(){
+    public Docket productApi() {
         Set<String> responseProduceType = new HashSet<String>();
         responseProduceType.add("application/json");
         responseProduceType.add("application/xml");
@@ -54,7 +54,6 @@ public class SwaggerConfig {
     }
 
     private Object apiKey() {
-        // TODO Auto-generated method stub
         return null;
     }
 

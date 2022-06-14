@@ -24,14 +24,14 @@ public class ControllerExceptionAdvice {
     }
 
     @ExceptionHandler(MealNotFoundException.class)
-    public ResponseEntity<StandardError> handleUsersNotFound(MealNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> handleMealNotFound(MealNotFoundException ex, HttpServletRequest request) {
         String errorMsg = "Meal Type not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         return getResponseError(errorMsg, status, request);
     }
 
     @ExceptionHandler(RatingNotFound.class)
-    public ResponseEntity<StandardError> handleUsersNotFound(RatingNotFound ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> handleRatingNotFound(RatingNotFound ex, HttpServletRequest request) {
         String errorMsg = "Rating not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         return getResponseError(errorMsg, status, request);

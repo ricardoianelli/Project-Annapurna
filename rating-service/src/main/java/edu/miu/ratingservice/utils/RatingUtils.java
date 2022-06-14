@@ -1,9 +1,7 @@
 package edu.miu.ratingservice.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import edu.miu.ratingservice.dto.request.RatingRequestDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
@@ -40,28 +38,5 @@ public class RatingUtils {
         ratingResponseDTO.setUserId(rating.getUserId());
         ratingResponseDTO.setRating(rating.getRating());
         return ratingResponseDTO;
-    }
-
-    // public static List<Object> parseRatingByMealIdToList(List<Rating> rating) {
-    // List<Object> nuList = new ArrayList<Object>();
-    // for (Rating rate : rating) {
-    // nuList.add(rate.getUserId());
-    // nuList.add(rate.getRating());
-    // }
-    // return nuList;
-    // }
-
-    public static List parseRatingByMealIdToList(List<Rating> rating) {
-        List map = new ArrayList<Object>();
-        for (Rating rating2 : rating) {
-            System.out.println(rating2);
-        }
-        for (Rating rate : rating) {
-            Map<String, Object> tempMap = new HashMap<>();
-            tempMap.put("rating", rate.getRating());
-            tempMap.put("userId", rate.getUserId());
-            map.add(tempMap);
-        }
-        return map;
     }
 }
