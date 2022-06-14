@@ -71,7 +71,6 @@ public class UserUtils {
         UserResponseFeignDTO userResponseFeignDTO = new UserResponseFeignDTO();
 
         userResponseFeignDTO.setId(user.getId());
-        userResponseFeignDTO.setPassword(user.getPassword());
         userResponseFeignDTO.setUsername(user.getUsername());
         userResponseFeignDTO.setEmail(user.getEmail());
         userResponseFeignDTO.setName(user.getName());
