@@ -31,13 +31,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleResponseDTO saveRole(RoleRequestDTO roleRequestDTO){
+    public RoleResponseDTO saveRole(RoleRequestDTO roleRequestDTO) {
         Role roleRequest = modelMapper.map(roleRequestDTO, Role.class);
         Role role = roleRepository.save(roleRequest);
         return modelMapper.map(role, RoleResponseDTO.class);
     }
+
     @Override
-    public List<Role> getAllRoles(){
+    public List<Role> getAllRoles() {
         return roleRepository.findAllRoles(true);
     }
 
@@ -45,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponseDTO updateRole(Long id, RoleRequestUpdateDTO roleRequestUpdateDTO) throws Exception {
         Role roleRequest = modelMapper.map(roleRequestUpdateDTO, Role.class);
         Role role = roleRepository.findById(id)
-                .orElseThrow(()-> new Exception("Throw Custom Exception here!"));
+                .orElseThrow(() -> new Exception("Throw Custom Exception here!"));
         role.setName(roleRequestUpdateDTO.getName());
         role.setStatus(roleRequestUpdateDTO.isStatus());
         roleRepository.save(role);
@@ -65,7 +66,7 @@ public class RoleServiceImpl implements RoleService {
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent()) {
             return role.get();
-        }else{
+        } else {
             throw new Exception("Throw some nice error!");
         }
     }

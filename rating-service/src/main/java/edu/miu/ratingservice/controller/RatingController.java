@@ -18,6 +18,18 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
+    @GetMapping("/meal/{id}")
+    public ResponseEntity<?> getRatingByDailyMealId(@PathVariable Long id) {
+        return new ResponseEntity<>(ratingService.getRatingByDailyMealId(id),
+                HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getRatingByUserId(@PathVariable Long id) {
+        return new ResponseEntity<>(ratingService.getRatingByUserId(id),
+                HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getRatingById(@PathVariable Long id) {
         return new ResponseEntity<>(ratingService.getRatingById(id),

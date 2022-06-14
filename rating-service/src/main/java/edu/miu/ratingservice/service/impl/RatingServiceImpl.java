@@ -17,7 +17,9 @@ import feign.FeignException;
 import feign.FeignException.FeignClientException;
 import feign.FeignException.NotFound;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,16 @@ public class RatingServiceImpl implements RatingService {
         this.ratingRepository = ratingRepository;
         this.userClient = userClient;
         this.dailyMealClient = dailyMealClient;
+    }
+
+    @Override
+    public List<Rating> getRatingByDailyMealId(Long id) {
+        return ratingRepository.findByDailyMealId(id);
+    }
+
+    @Override
+    public List<Rating> getRatingByUserId(Long id) {
+        return ratingRepository.findByUserId(id);
     }
 
     @Override
@@ -97,4 +109,5 @@ public class RatingServiceImpl implements RatingService {
             throw new MealNotFoundException();
         }
     }
+
 }
