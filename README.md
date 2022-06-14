@@ -29,4 +29,3 @@ taught by [Professor Michael Zijlstra](https://manalabs.org/).🧑🏽‍🏫 at
 - ## Ricardo Macedo Ianelli 🇧🇷
 - ## Riwaaz Bahadur Sijapati🇳🇵
 - ## Bijay Shrestha🇳🇵
-

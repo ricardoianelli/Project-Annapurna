@@ -1,0 +1,14 @@
+package edu.miu.ratingservice.service;
+
+import edu.miu.ratingservice.dto.request.RatingRequestDTO;
+import edu.miu.ratingservice.dto.response.RatingResponseDTO;
+
+public interface RatingService {
+    RatingResponseDTO getRatingById(Long id);
+
+    RatingResponseDTO addRating(RatingRequestDTO ratingRequestDTO);
+
+    RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id);
+
+    RatingResponseDTO deleteRating(Long id);
+}
