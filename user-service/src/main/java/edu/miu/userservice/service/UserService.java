@@ -16,11 +16,11 @@ public interface UserService {
 
     UserResponseFeignDTO getUserByUsername(String username);
 
-    String addUser(UserRequestDTO userRequestDTO);
+    UserResponseDTO addUser(UserRequestDTO userRequestDTO);
 
     UserResponseDTO updateUser(UserRequestDTO userRequestDTO, Long id);
 
-    String deleteUser(Long id);
+    void deleteUser(Long id) throws Exception;
 
     UserResponseFeignDTO searchUser(UserRequestFeignDTO requestDTO);
 
