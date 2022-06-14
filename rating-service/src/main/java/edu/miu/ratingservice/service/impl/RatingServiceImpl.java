@@ -65,7 +65,7 @@ public class RatingServiceImpl implements RatingService {
             rating.setUserId(ratingRepository.findById(id).get().getDailyMealId());
             rating.setRating(ratingRequestDTO.getRating());
             ratingRepository.save(rating);
-            return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO);
+            return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(rating);
         } catch (NoSuchElementException e) {
             throw new RatingNotFound();
         }

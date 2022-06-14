@@ -24,11 +24,11 @@ public class RatingUtils {
         return rating;
     }
 
-    public static RatingResponseDTO parseRatingRequestDTOToRatingResponseDTO(RatingRequestDTO ratingRequestDTO) {
+    public static RatingResponseDTO parseRatingRequestDTOToRatingResponseDTO(Rating rating) {
         RatingResponseDTO ratingResponseDTO = new RatingResponseDTO();
-        ratingResponseDTO.setUserId(ratingRequestDTO.getUserId());
-        ratingResponseDTO.setDailyMealId(ratingRequestDTO.getDailyMealId());
-        ratingResponseDTO.setRating(ratingRequestDTO.getRating());
+        ratingResponseDTO.setUserId(rating.getUserId());
+        ratingResponseDTO.setDailyMealId(rating.getDailyMealId());
+        ratingResponseDTO.setRating(rating.getRating());
         return ratingResponseDTO;
     }
 
