@@ -34,6 +34,7 @@ public class ApplicationStartup {
     @Bean
     public CommandLineRunner loadData(UserRepository userRepository, RoleRepository roleRepository) {
         return (args) -> {
+            userRepository.deleteAll();
             List<User> users = userRepository.findAll();
             Collection<Role> rolesList = new ArrayList<>();
            //PERSIST ALL THE ROLES FOR THE APPLICATION
@@ -47,14 +48,16 @@ public class ApplicationStartup {
             //TODO: This is weird here!
             System.out.println("Name : " + startupProperties.getName());
             if (ObjectUtils.isEmpty(users)) {
-                userRepository.save(new User(
+                User benedictCumberBatch = userRepository.save(new User(
                         startupProperties.getUsername(),
                         passwordEncoder.encode(startupProperties.getPassword()),
                         "Benedict Cumberbatch",
                         startupProperties.getEmail(),
-                        startupProperties.getSubscribed(),
-                        rolesList
+                        startupProperties.getSubscribed()
                 ));
+                benedictCumberBatch.setRoles(rolesList);
+                userRepository.save(benedictCumberBatch);
+
             }
         };
     }
