@@ -37,7 +37,7 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> getRatingByDailyMealId(Long id) {
         List<Rating> rating = ratingRepository.findByDailyMealId(id);
         if (rating.size() != 0) {
-            return ratingRepository.findByDailyMealId(id);
+            return rating;
         } else {
             throw new MealNotFoundException();
         }
@@ -47,7 +47,7 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> getRatingByUserId(Long id) {
         List<Rating> rating = ratingRepository.findByUserId(id);
         if (rating.size() != 0) {
-            return ratingRepository.findByUserId(id);
+            return rating;
         } else {
             throw new UserNotFoundException();
         }
