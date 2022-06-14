@@ -1,4 +1,4 @@
-package edu.miu.etlservice.service.impl;
+package edu.miu.etlservice.service;
 
 import edu.miu.etlservice.dto.DailyMealDTO;
 
