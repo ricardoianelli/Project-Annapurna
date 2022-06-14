@@ -18,6 +18,7 @@ import feign.FeignException.FeignClientException;
 import feign.FeignException.NotFound;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -39,9 +40,15 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<Rating> getRatingByDailyMealId(Long id) {
-        return ratingRepository.findByDailyMealId(id);
+    public List<Object> getRatingByDailyMealId(Long id) {
+        List ratingByMealId = RatingUtils.parseRatingByMealIdToList(ratingRepository.findByDailyMealId(id));
+        return ratingByMealId;
     }
+
+    // @Override
+    // public List<Rating> getRatingByDailyMealId(Long id) {
+    // return ratingRepository.findByDailyMealId(id);
+    // }
 
     @Override
     public List<Rating> getRatingByUserId(Long id) {
