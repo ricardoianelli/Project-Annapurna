@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @project cs544-project
  */
 @RestController
-@RequestMapping("api/v1/email")
-public class EmailResource {
+@RequestMapping("api/v1/email/test")
+public class TestEmailResource {
 
     @GetMapping
     public String test(){

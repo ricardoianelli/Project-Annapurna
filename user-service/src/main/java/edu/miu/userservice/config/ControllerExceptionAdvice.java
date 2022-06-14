@@ -1,6 +1,6 @@
 package edu.miu.userservice.config;
 
-import edu.miu.userservice.controller.StandardError;
+import edu.miu.userservice.exception.StandardError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

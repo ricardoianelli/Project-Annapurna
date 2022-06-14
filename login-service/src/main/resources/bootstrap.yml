@@ -8,28 +8,6 @@ spring:
     config:
       uri:
         - http://localhost:8000
-#    gateway:
-#      routes:
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/api/v1/users/**
-#        - id: email-service
-#          uri: lb://email-service
-#          predicates:
-#            - Path=/api/v1/email/**
-#        - id: etl-service
-#          uri: lb://etl-service
-#          predicates:
-#            - Path=/api/v1/etl/**
-#        - id: rating-service
-#          uri: lb://rating-service
-#          predicates:
-#            - Path=/api/v1/ratings/**
-#        - id: login-service
-#          uri: lb://login-service
-#          predicates:
-#            - Path=/api/v1/login/**
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
@@ -38,3 +16,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

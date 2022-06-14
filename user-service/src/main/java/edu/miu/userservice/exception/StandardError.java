@@ -1,4 +1,4 @@
-package edu.miu.userservice.controller;
+package edu.miu.userservice.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
