@@ -1,6 +1,7 @@
 package edu.miu.ratingservice.config;
 
 import edu.miu.ratingservice.exception.MealNotFoundException;
+import edu.miu.ratingservice.exception.RatingNotFound;
 import edu.miu.ratingservice.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,13 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MealNotFoundException.class)
     public ResponseEntity<StandardError> handleUsersNotFound(MealNotFoundException ex, HttpServletRequest request) {
         String errorMsg = "Meal Type not found";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return getResponseError(errorMsg, status, request);
+    }
+
+    @ExceptionHandler(RatingNotFound.class)
+    public ResponseEntity<StandardError> handleUsersNotFound(RatingNotFound ex, HttpServletRequest request) {
+        String errorMsg = "Rating not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
         return getResponseError(errorMsg, status, request);
     }

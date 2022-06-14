@@ -5,6 +5,7 @@ import edu.miu.ratingservice.dto.response.DailyMealResponseDTO;
 import edu.miu.ratingservice.dto.response.RatingResponseDTO;
 import edu.miu.ratingservice.dto.response.UserResponseDTO;
 import edu.miu.ratingservice.exception.MealNotFoundException;
+import edu.miu.ratingservice.exception.RatingNotFound;
 import edu.miu.ratingservice.exception.UserNotFoundException;
 import edu.miu.ratingservice.feignclients.DailyMealClient;
 import edu.miu.ratingservice.feignclients.UserClient;
@@ -14,6 +15,9 @@ import edu.miu.ratingservice.service.RatingService;
 import edu.miu.ratingservice.utils.RatingUtils;
 import feign.FeignException;
 import feign.FeignException.FeignClientException;
+import feign.FeignException.NotFound;
+
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +37,13 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public RatingResponseDTO getRatingById(Long id) {
-        Rating rating = ratingRepository.findById(id).get();
-        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
+    public RatingResponseDTO getRatingById(Long id) throws RatingNotFound {
+        try {
+            Rating rating = ratingRepository.findById(id).get();
+            return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
+        } catch (NoSuchElementException ex) {
+            throw new RatingNotFound();
+        }
     }
 
     @Override
@@ -48,22 +56,30 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id) {
-        Rating rating = ratingRepository.findById(id).get();
-        rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
-        rating.setId(id);
-        rating.setDailyMealId(ratingRequestDTO.getDailyMealId());
-        rating.setUserId(ratingRequestDTO.getUserId());
-        rating.setRating(ratingRequestDTO.getRating());
-        ratingRepository.save(rating);
-        return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO);
+    public RatingResponseDTO updateRating(RatingRequestDTO ratingRequestDTO, Long id) throws RatingNotFound {
+        try {
+            Rating rating = ratingRepository.findById(id).get();
+            rating = RatingUtils.parseRatingRequestDTOToRating(ratingRequestDTO);
+            rating.setId(id);
+            rating.setDailyMealId(ratingRepository.findById(id).get().getDailyMealId());
+            rating.setUserId(ratingRepository.findById(id).get().getDailyMealId());
+            rating.setRating(ratingRequestDTO.getRating());
+            ratingRepository.save(rating);
+            return RatingUtils.parseRatingRequestDTOToRatingResponseDTO(ratingRequestDTO);
+        } catch (NoSuchElementException e) {
+            throw new RatingNotFound();
+        }
     }
 
     @Override
-    public RatingResponseDTO deleteRating(Long id) {
-        Rating rating = ratingRepository.findById(id).get();
-        ratingRepository.delete(rating);
-        return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
+    public RatingResponseDTO deleteRating(Long id) throws RatingNotFound {
+        try {
+            Rating rating = ratingRepository.findById(id).get();
+            ratingRepository.delete(rating);
+            return RatingUtils.parseRatingToRatingResponseDTOObject(rating);
+        } catch (NoSuchElementException e) {
+            throw new RatingNotFound();
+        }
     }
 
     private void checkUserExists(Long id) {
