@@ -12,8 +12,11 @@ You must start the services in the following order:
 4. **Api-gateway-one:** *8080*
 5. **Login-Service:** *9090*
 6. **User-Service:** *8082*
+ 
 
 These other services you can start in any order:
+
+
 8. **Email-Service:** *8081*
 9. **ETL-Service:** *8083*
 10. **Rating-Service:** *8084*
@@ -33,7 +36,11 @@ You also need to setup two environment variables for the email service:
 3. ### EMAIL-SERVICE
    - http://localhost:8081/swagger-ui.html#/
 
+4. ### ETL-SERVICE
+   - http://localhost:8083/swagger-ui.html#/
 
+5. ### RATING-SERVICE
+   - http://localhost:8084/swagger-ui.html#/
 
 
 # Contributors
