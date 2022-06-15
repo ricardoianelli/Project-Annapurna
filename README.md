@@ -1,6 +1,26 @@
-# cs544-project
+# Project Annapurna
 This is a Project Repository for a course CS544-Enterprise Architecture
 taught by [Professor Michael Zijlstra](https://manalabs.org/).🧑🏽‍🏫 at MIU 🏫
+
+
+# How to run
+You must start the services in the following order:
+
+1. **Eureka-Server-One:** *9091*
+2. **Eureka-Server-Two:** *9092* (optional)
+3. **Config-server:** *8000*
+4. **Api-gateway-one:** *8080*
+5. **Login-Service:** *9090*
+6. **User-Service:** *8082*
+
+These other services you can start in any order:
+8. **Email-Service:** *8081*
+9. **ETL-Service:** *8083*
+10. **Rating-Service:** *8084*
+
+You also need to setup two environment variables for the email service:
+- **GMAIL_USER:** A valid Gmail email address
+- **GMAIL_PASSWORD:** The password or an app password for the GMAIL_USER.
 
 # Swagger URLs
 
@@ -14,16 +34,7 @@ taught by [Professor Michael Zijlstra](https://manalabs.org/).🧑🏽‍🏫 at
    - http://localhost:8081/swagger-ui.html#/
 
 
-# Ports
-1. **Eureka-Server-One:** *9091*
-2. **Eureka-Server-Two:** *9092*
-3. **Config-server:** *8000*
-4. **Api-gateway-one:** *8080*
-5. **Login-Service:** *9090*
-6. **User-Service:** *8082*
-7. **Email-Service:** *8081*
-8. **ETL-Service:** *8083*
-9. **Rating-Service:** *8084*
+
 
 # Contributors
 - ## Ricardo Macedo Ianelli 🇧🇷
