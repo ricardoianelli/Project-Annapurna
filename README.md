@@ -47,3 +47,7 @@ You also need to setup two environment variables for the email service:
 - ## Ricardo Macedo Ianelli 🇧🇷
 - ## Riwaaz Bahadur Sijapati🇳🇵
 - ## Bijay Shrestha🇳🇵
+
+# Presentation
+Since it was a project for a specific course, we've also created [small presentation](https://docs.google.com/presentation/d/1O-QTDH0kmuehK4BpleJ2WtXOt_wkxDYWWcnGtuHpZyk/edit#slide=id.gc6f80d1ff_0_0). There isn't text in the slides since we prefer to have a more dynamic presentation.
+
